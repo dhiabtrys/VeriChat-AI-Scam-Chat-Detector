@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>AI Scam Chat Analysis</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            background: #f1f5f9;
+
+            color: #1e293b;
+
+        }
+
+
+        /* ==========================
+           NAVBAR
+        ========================== */
+
+        .navbar {
+
+            background: #111827;
+
+            color: white;
+
+            padding: 18px 8%;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+        }
+
+
+        .logo {
+
+            font-size: 21px;
+
+            font-weight: bold;
+
+        }
+
+
+        .back-btn {
+
+            color: white;
+
+            text-decoration: none;
+
+            background: #2563eb;
+
+            padding: 9px 15px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+        }
+
+
+        .back-btn:hover {
+
+            background: #1d4ed8;
+
+        }
+
+
+        /* ==========================
+           HEADER
+        ========================== */
+
+        .header {
+
+            text-align: center;
+
+            padding: 45px 20px 25px;
+
+        }
+
+
+        .header h1 {
+
+            margin: 0;
+
+            font-size: 36px;
+
+            color: #111827;
+
+        }
+
+
+        .header p {
+
+            color: #64748b;
+
+            margin-top: 10px;
+
+        }
+
+
+        /* ==========================
+           SUMMARY CARDS
+        ========================== */
+
+        .card-container {
+
+            width: 90%;
+
+            max-width: 1100px;
+
+            margin: 20px auto 30px;
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+
+        }
+
+
+        .card {
+
+            background: white;
+
+            width: 30%;
+
+            min-width: 220px;
+
+            padding: 25px;
+
+            border-radius: 15px;
+
+            text-align: center;
+
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+
+        }
+
+
+        .card-icon {
+
+            font-size: 30px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .card h3 {
+
+            color: #64748b;
+
+            font-size: 15px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .card h2 {
+
+            font-size: 35px;
+
+            margin: 0;
+
+        }
+
+
+        .scam-card h2 {
+
+            color: #f87171;
+
+        }
+
+
+        .legit-card h2 {
+
+            color: #60a5fa;
+
+        }
+
+
+        /* ==========================
+           SECTION
+        ========================== */
+
+        .section {
+
+            background: white;
+
+            width: 90%;
+
+            max-width: 1100px;
+
+            margin: 25px auto;
+
+            padding: 30px;
+
+            border-radius: 18px;
+
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+
+        }
+
+
+        .section h2 {
+
+            margin-top: 0;
+
+        }
+
+
+        /* ==========================
+           RISK SCORE
+        ========================== */
+
+        .risk-section {
+
+            text-align: center;
+
+        }
+
+
+        .risk-score {
+
+            font-size: 60px;
+
+            font-weight: bold;
+
+            margin: 15px 0;
+
+            color: #f87171;
+
+        }
+
+
+        .risk-badge {
+
+            display: inline-block;
+
+            padding: 10px 20px;
+
+            border-radius: 30px;
+
+            background: #fef2f2;
+
+            color: #ef4444;
+
+            font-weight: bold;
+
+        }
+
+
+        /* ==========================
+           PDF BUTTON
+        ========================== */
+
+        .pdf-btn {
+
+            display: inline-block;
+
+            margin-top: 25px;
+
+            padding: 12px 22px;
+
+            background: #2563eb;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+
+        }
+
+
+        .pdf-btn:hover {
+
+            background: #1d4ed8;
+
+        }
+
+
+        /* ==========================
+           CHARTS
+        ========================== */
+
+        .chart-section {
+
+            text-align: center;
+
+        }
+
+
+        .chart-title {
+
+            margin-bottom: 25px;
+
+            color: #111827;
+
+        }
+
+
+        .chart-box {
+
+            width: 450px;
+
+            max-width: 100%;
+
+            margin: auto;
+
+        }
+
+
+        /* ==========================
+           MESSAGE ANALYSIS
+        ========================== */
+
+        .message {
+
+            padding: 18px;
+
+            margin: 15px 0;
+
+            border-radius: 12px;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* SCAM */
+
+        .scam {
+
+            background: #fef2f2;
+
+            border-left: 6px solid #f87171;
+
+        }
+
+
+        .status-scam {
+
+            color: #ef4444;
+
+            font-weight: bold;
+
+        }
+
+
+        /* LEGITIMATE */
+
+        .safe {
+
+            background: #f0fdf4;
+
+            border-left: 6px solid #4ade80;
+
+        }
+
+
+        .status-safe {
+
+            color: #16a34a;
+
+            font-weight: bold;
+
+        }
+
+
+        .message-text {
+
+            margin-top: 8px;
+
+            color: #334155;
+
+        }
+
+
+        /* ==========================
+           FOOTER
+        ========================== */
+
+        footer {
+
+            margin-top: 50px;
+
+            background: #111827;
+
+            color: #94a3b8;
+
+            text-align: center;
+
+            padding: 20px;
+
+            font-size: 13px;
+
+        }
+
+
+        /* ==========================
+           MOBILE
+        ========================== */
+
+        @media (max-width: 700px) {
+
+            .header h1 {
+
+                font-size: 28px;
+
+            }
+
+
+            .card {
+
+                width: 100%;
+
+            }
+
+
+            .section {
+
+                padding: 20px;
+
+            }
+
+
+            .risk-score {
+
+                font-size: 48px;
+
+            }
+
+
+            .navbar {
+
+                padding: 15px 5%;
+
+            }
+
+
+            .logo {
+
+                font-size: 17px;
+
+            }
+
+
+            .chart-box {
+
+                width: 100%;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ==========================
+     NAVBAR
+========================== -->
+
+<div class="navbar">
+
+    <div class="logo">
+
+        🛡️ VeriChat AI
+
+    </div>
+
+
+    <a href="/" class="back-btn">
+
+        ← Analyze Another
+
+    </a>
+
+</div>
+
+
+
+<!-- ==========================
+     HEADER
+========================== -->
+
+<div class="header">
+
+    <h1>
+
+        📊 AI Scam Chat Analysis
+
+    </h1>
+
+
+    <p>
+
+        AI-powered analysis of your uploaded chat messages
+
+    </p>
+
+</div>
+
+
+
+<!-- ==========================
+     SUMMARY CARDS
+========================== -->
+
+<div class="card-container">
+
+
+    <div class="card">
+
+        <div class="card-icon">
+
+            💬
+
+        </div>
+
+
+        <h3>
+
+            Total Messages
+
+        </h3>
+
+
+        <h2>
+
+            {{total}}
+
+        </h2>
+
+    </div>
+
+
+
+    <div class="card scam-card">
+
+        <div class="card-icon">
+
+            ⚠️
+
+        </div>
+
+
+        <h3>
+
+            Scam Messages
+
+        </h3>
+
+
+        <h2>
+
+            {{scam}}
+
+        </h2>
+
+    </div>
+
+
+
+    <div class="card legit-card">
+
+        <div class="card-icon">
+
+            ✅
+
+        </div>
+
+
+        <h3>
+
+            Legitimate
+
+        </h3>
+
+
+        <h2>
+
+            {{legit}}
+
+        </h2>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- ==========================
+     RISK SCORE
+========================== -->
+
+<div class="section risk-section">
+
+
+    <h2>
+
+        🛡️ Scam Risk Score
+
+    </h2>
+
+
+    <div class="risk-score">
+
+        {{ "%.2f"|format(risk) }}%
+
+    </div>
+
+
+    <div class="risk-badge">
+
+        Risk Level: {{level}}
+
+    </div>
+
+
+    <!-- ==========================
+         DOWNLOAD PDF REPORT
+    ========================== -->
+
+    <div>
+
+        <a
+            href="/download-report/{{ report_id }}"
+            class="pdf-btn"
+        >
+
+            📄 Download PDF Report
+
+        </a>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- ==========================
+     SCAM VS LEGITIMATE
+========================== -->
+
+<div class="section chart-section">
+
+
+    <h2 class="chart-title">
+
+        📊 Scam vs Legitimate Distribution
+
+    </h2>
+
+
+    <div class="chart-box">
+
+        <canvas id="pieChart"></canvas>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- ==========================
+     RISK METER
+========================== -->
+
+<div class="section chart-section">
+
+
+    <h2 class="chart-title">
+
+        🚨 Scam Risk Meter
+
+    </h2>
+
+
+    <div class="chart-box">
+
+        <canvas id="riskMeter"></canvas>
+
+    </div>
+
+
+    <h2 style="margin-top: 20px;">
+
+        {{ "%.2f"|format(risk) }}%
+
+    </h2>
+
+
+    <p style="color:#64748b;">
+
+        Current Risk Level:
+
+        <b>{{level}}</b>
+
+    </p>
+
+
+</div>
+
+
+
+<!-- ==========================
+     MESSAGE ANALYSIS
+========================== -->
+
+<div class="section">
+
+
+    <h2>
+
+        🔍 Message Analysis
+
+    </h2>
+
+
+    <p style="color:#64748b;">
+
+        Individual messages detected by the AI system.
+
+    </p>
+
+
+
+    {% for item in results %}
+
+
+        {% if item.status == "SCAM" %}
+
+
+        <!-- SCAM MESSAGE -->
+
+        <div class="message scam">
+
+
+            <div class="status-scam">
+
+                ⚠️ SCAM MESSAGE
+
+            </div>
+
+
+            <div class="message-text">
+
+                {{item.message}}
+
+            </div>
+
+
+        </div>
+
+
+        {% else %}
+
+
+        <!-- LEGITIMATE MESSAGE -->
+
+        <div class="message safe">
+
+
+            <div class="status-safe">
+
+                ✅ LEGITIMATE MESSAGE
+
+            </div>
+
+
+            <div class="message-text">
+
+                {{item.message}}
+
+            </div>
+
+
+        </div>
+
+
+        {% endif %}
+
+
+    {% endfor %}
+
+
+</div>
+
+
+
+<!-- ==========================
+     FOOTER
+========================== -->
+
+<footer>
+
+    VeriChat AI-Based Scam Chat Detector ©️ 2026
+
+</footer>
+
+
+
+<script>
+
+
+/* ==========================
+   PIE CHART
+========================== */
+
+new Chart(
+
+    document.getElementById('pieChart'),
+
+    {
+
+        type: 'pie',
+
+        data: {
+
+            labels: [
+
+                'Scam',
+
+                'Legitimate'
+
+            ],
+
+            datasets: [{
+
+                data: [
+
+                    {{scam}},
+
+                    {{legit}}
+
+                ],
+
+                backgroundColor: [
+
+                    '#f87171',
+
+                    '#60a5fa'
+
+                ],
+
+                borderColor: [
+
+                    '#ef4444',
+
+                    '#3b82f6'
+
+                ],
+
+                borderWidth: 2
+
+            }]
+
+        },
+
+
+        options: {
+
+            responsive: true,
+
+            plugins: {
+
+                legend: {
+
+                    position: 'bottom'
+
+                }
+
+            }
+
+        }
+
+    }
+
+);
+
+
+
+/* ==========================
+   RISK METER
+========================== */
+
+let riskValue = {{risk}};
+
+
+new Chart(
+
+    document.getElementById('riskMeter'),
+
+    {
+
+        type: 'doughnut',
+
+        data: {
+
+            labels: [
+
+                'Risk',
+
+                'Remaining'
+
+            ],
+
+            datasets: [{
+
+                data: [
+
+                    riskValue,
+
+                    100 - riskValue
+
+                ],
+
+                backgroundColor: [
+
+                    '#f87171',
+
+                    '#e5e7eb'
+
+                ],
+
+                borderWidth: 0
+
+            }]
+
+        },
+
+
+        options: {
+
+            rotation: 270,
+
+            circumference: 180,
+
+            cutout: '70%',
+
+            responsive: true,
+
+            plugins: {
+
+                legend: {
+
+                    display: false
+
+                }
+
+            }
+
+        }
+
+    }
+
+);
+
+
+</script>
+
+
+</body>
+
+</html>
