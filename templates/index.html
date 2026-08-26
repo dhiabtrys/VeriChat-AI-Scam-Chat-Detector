@@ -20,6 +20,10 @@
             color: #1e293b;
         }
 
+        /* =========================
+           NAVBAR
+        ========================= */
+
         .navbar {
             background: #111827;
             color: white;
@@ -40,6 +44,10 @@
             border-radius: 20px;
             font-size: 13px;
         }
+
+        /* =========================
+           HERO
+        ========================= */
 
         .hero {
             text-align: center;
@@ -64,6 +72,10 @@
             line-height: 1.6;
         }
 
+        /* =========================
+           UPLOAD CARD
+        ========================= */
+
         .upload-card {
             background: white;
             width: 90%;
@@ -74,6 +86,26 @@
             box-shadow: 0 10px 35px rgba(0,0,0,0.08);
             text-align: center;
         }
+
+        /* =========================
+           ERROR MESSAGE
+        ========================= */
+
+        .error-message {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        /* =========================
+           UPLOAD AREA
+        ========================= */
 
         .upload-area {
             border: 2px dashed #cbd5e1;
@@ -99,6 +131,10 @@
             width: 100%;
         }
 
+        /* =========================
+           BUTTON
+        ========================= */
+
         button {
             border: none;
             background: linear-gradient(135deg, #2563eb, #4f46e5);
@@ -115,6 +151,10 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(37,99,235,0.3);
         }
+
+        /* =========================
+           FEATURES
+        ========================= */
 
         .features {
             width: 90%;
@@ -150,12 +190,49 @@
             line-height: 1.5;
         }
 
+        /* =========================
+           FOOTER
+        ========================= */
+
         footer {
             text-align: center;
             background: #111827;
             color: #94a3b8;
             padding: 20px;
             font-size: 13px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .hero {
+                padding-top: 50px;
+            }
+
+            .upload-card {
+                padding: 25px;
+            }
+
+            .navbar {
+                padding: 15px 5%;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+
+            .badge {
+                font-size: 11px;
+                padding: 7px 10px;
+            }
+
         }
 
     </style>
@@ -166,7 +243,9 @@
 <body>
 
 
-<!-- NAVBAR -->
+<!-- =========================
+     NAVBAR
+========================= -->
 
 <div class="navbar">
 
@@ -181,8 +260,9 @@
 </div>
 
 
-
-<!-- HERO -->
+<!-- =========================
+     HERO
+========================= -->
 
 <div class="hero">
 
@@ -203,10 +283,29 @@
 </div>
 
 
-
-<!-- UPLOAD -->
+<!-- =========================
+     UPLOAD CARD
+========================= -->
 
 <div class="upload-card">
+
+
+    <!-- ERROR MESSAGE -->
+
+    {% if error %}
+
+    <div class="error-message">
+
+        ⚠️ <strong>Analysis Error</strong>
+
+        <br>
+
+        {{ error }}
+
+    </div>
+
+    {% endif %}
+
 
     <h2>
         📁 Analyze Your Chat
@@ -217,7 +316,15 @@
     </p>
 
 
-    <form action="/predict" method="POST" enctype="multipart/form-data">
+    <!-- =========================
+         UPLOAD FORM
+    ========================= -->
+
+    <form
+        action="/predict"
+        method="POST"
+        enctype="multipart/form-data"
+    >
 
         <div class="upload-area">
 
@@ -256,10 +363,14 @@
 </div>
 
 
-
-<!-- FEATURES -->
+<!-- =========================
+     FEATURES
+========================= -->
 
 <div class="features">
+
+
+    <!-- FEATURE 1 -->
 
     <div class="feature">
 
@@ -279,6 +390,8 @@
     </div>
 
 
+    <!-- FEATURE 2 -->
+
     <div class="feature">
 
         <div class="feature-icon">
@@ -297,6 +410,8 @@
     </div>
 
 
+    <!-- FEATURE 3 -->
+
     <div class="feature">
 
         <div class="feature-icon">
@@ -314,13 +429,17 @@
 
     </div>
 
+
 </div>
 
 
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer>
 
-    VeriChat AI-Based Scam Chat Detector © 2026
+    VeriChat AI-Based Scam Chat Detector ©️ 2026
 
 </footer>
 
