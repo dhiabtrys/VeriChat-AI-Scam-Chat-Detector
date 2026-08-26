@@ -14,6 +14,13 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, Tabl
 
 app = Flask(__name__)
 
+# =========================
+# BASIC FILE SECURITY
+# =========================
+
+# Maximum upload size = 5 MB
+app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024
+
 
 # =========================
 # LOAD AI MODEL
@@ -52,22 +59,59 @@ def clean_text(text):
 
 
 # =========================
+# CHECK WHATSAPP FORMAT
+# =========================
+
+def is_whatsapp_message(text):
+
+    # Format:
+    # [8/25/26, 10:30:15 PM] Ali: Hello
+    pattern_1 = r'^\[\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}(?::\d{2})?\s?(?:AM|PM)?\]\s.*?:\s.+'
+
+    # Format:
+    # 25/8/2026, 10:30 - Ali: Hello
+    pattern_2 = r'^\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}\s-\s.*?:\s.+'
+
+    if re.match(pattern_1, text):
+        return True
+
+    if re.match(pattern_2, text):
+        return True
+
+    return False
+
+
+# =========================
 # EXTRACT WHATSAPP MESSAGE
 # =========================
 
 def extract_message(text):
 
-    pattern = r'\]\s.*?:\s(.*)'
+    # Format:
+    # [8/25/26, 10:30:15 PM] Ali: Hello
+    pattern_1 = r'^\[\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}(?::\d{2})?\s?(?:AM|PM)?\]\s.*?:\s(.*)'
 
     match = re.search(
-        pattern,
+        pattern_1,
         text
     )
 
     if match:
         return match.group(1)
 
-    return text
+    # Format:
+    # 25/8/2026, 10:30 - Ali: Hello
+    pattern_2 = r'^\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}\s-\s.*?:\s(.*)'
+
+    match = re.search(
+        pattern_2,
+        text
+    )
+
+    if match:
+        return match.group(1)
+
+    return ""
 
 
 # =========================
@@ -154,10 +198,6 @@ def generate_pdf(
     )
 
 
-    # =========================
-    # PDF DOCUMENT
-    # =========================
-
     document = SimpleDocTemplate(
         filepath,
         pagesize=A4,
@@ -200,10 +240,6 @@ def generate_pdf(
     story = []
 
 
-    # =========================
-    # TITLE
-    # =========================
-
     story.append(
         Paragraph(
             "AI SCAM CHAT DETECTION REPORT",
@@ -227,10 +263,6 @@ def generate_pdf(
         )
     )
 
-
-    # =========================
-    # ANALYSIS SUMMARY
-    # =========================
 
     story.append(
         Paragraph(
@@ -306,10 +338,6 @@ def generate_pdf(
     )
 
 
-    # =========================
-    # MESSAGE ANALYSIS
-    # =========================
-
     story.append(
         Paragraph(
             "Message Analysis",
@@ -328,7 +356,6 @@ def generate_pdf(
         message = result["message"]
 
 
-        # Remove unsupported emoji/symbols
         message = message.encode(
             "ascii",
             "ignore"
@@ -361,10 +388,6 @@ def generate_pdf(
         )
 
 
-    # =========================
-    # BUILD PDF
-    # =========================
-
     document.build(
         story
     )
@@ -383,31 +406,104 @@ def generate_pdf(
 )
 def predict():
 
-    # Check uploaded file
+    # =========================
+    # CHECK FILE EXISTENCE
+    # =========================
+
     if 'file' not in request.files:
 
-        return "No file uploaded."
+        return render_template(
+            'index.html',
+            error="No file was uploaded. Please select a WhatsApp chat file."
+        )
 
 
     file = request.files['file']
 
 
+    # =========================
+    # CHECK EMPTY FILENAME
+    # =========================
+
     if file.filename == '':
 
-        return "Please select a file."
+        return render_template(
+            'index.html',
+            error="No file was selected. Please choose a file to analyze."
+        )
+
+
+    # =========================
+    # CHECK FILE EXTENSION
+    # =========================
+
+    if not file.filename.lower().endswith('.txt'):
+
+        return render_template(
+            'index.html',
+            error="Invalid file type. Please upload a WhatsApp chat file in .txt format."
+        )
 
 
     # =========================
     # READ FILE
     # =========================
 
-    chat = file.read().decode(
-        'utf-8',
-        errors='ignore'
-    )
+    try:
+
+        chat = file.read().decode(
+            'utf-8',
+            errors='ignore'
+        )
+
+    except Exception:
+
+        return render_template(
+            'index.html',
+            error="The uploaded file could not be read. Please try another .txt file."
+        )
+
+
+    # =========================
+    # CHECK EMPTY FILE
+    # =========================
+
+    if not chat.strip():
+
+        return render_template(
+            'index.html',
+            error="The uploaded file is empty. Please upload a WhatsApp chat containing messages."
+        )
 
 
     messages = chat.split("\n")
+
+
+    # =========================
+    # CHECK WHATSAPP FORMAT
+    # =========================
+
+    whatsapp_message_count = 0
+
+    for msg in messages:
+
+        msg = msg.strip()
+
+        if msg == "":
+            continue
+
+        if is_whatsapp_message(msg):
+
+            whatsapp_message_count += 1
+
+
+    # No WhatsApp formatted messages found
+    if whatsapp_message_count == 0:
+
+        return render_template(
+            'index.html',
+            error="Invalid WhatsApp chat format. Please upload a chat exported directly from WhatsApp in .txt format."
+        )
 
 
     # =========================
@@ -434,10 +530,26 @@ def predict():
         msg = msg.strip()
 
 
-        if msg != "":
+        if msg == "":
+            continue
 
-            total_count += 1
 
+        # Ignore non-message lines
+        if not is_whatsapp_message(msg):
+            continue
+
+
+        extracted = extract_message(msg)
+
+
+        if not extracted.strip():
+            continue
+
+
+        total_count += 1
+
+
+        try:
 
             # Predict classification
             pred = predict_message(msg)
@@ -449,61 +561,75 @@ def predict():
             )
 
 
-            scam_probabilities.append(
-                scam_probability
+        except Exception:
+
+            return render_template(
+                'index.html',
+                error="The system could not process the uploaded chat. Please make sure it is a valid WhatsApp exported .txt file."
             )
 
 
-            # =========================
-            # SCAM
-            # =========================
-
-            if pred == 1:
-
-                scam_count += 1
-
-                results.append({
-
-                    "message": msg,
-
-                    "status": "SCAM"
-
-                })
+        scam_probabilities.append(
+            scam_probability
+        )
 
 
-            # =========================
-            # LEGITIMATE
-            # =========================
+        # =========================
+        # SCAM
+        # =========================
 
-            else:
+        if pred == 1:
 
-                legit_count += 1
+            scam_count += 1
 
-                results.append({
+            results.append({
 
-                    "message": msg,
+                "message": msg,
 
-                    "status": "LEGITIMATE"
+                "status": "SCAM"
 
-                })
+            })
+
+
+        # =========================
+        # LEGITIMATE
+        # =========================
+
+        else:
+
+            legit_count += 1
+
+            results.append({
+
+                "message": msg,
+
+                "status": "LEGITIMATE"
+
+            })
+
+
+    # =========================
+    # CHECK VALID MESSAGES
+    # =========================
+
+    if total_count == 0:
+
+        return render_template(
+            'index.html',
+            error="No valid WhatsApp messages were found in the uploaded file."
+        )
 
 
     # =========================
     # RISK SCORE
     # =========================
 
-    if total_count == 0:
+    risk_score = (
 
-        risk_score = 0
+        sum(scam_probabilities)
+        / len(scam_probabilities)
 
-    else:
-
-        risk_score = (
-
-            sum(scam_probabilities)
-            / len(scam_probabilities)
-
-        ) * 100
+    ) * 100
 
 
     # =========================
@@ -514,11 +640,9 @@ def predict():
 
         risk_level = "LOW"
 
-
     elif risk_score < 70:
 
         risk_level = "MEDIUM"
-
 
     else:
 
