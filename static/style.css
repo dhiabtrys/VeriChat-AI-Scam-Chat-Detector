@@ -1,0 +1,1876 @@
+/* =========================================================
+   VERICHAT AI - STYLE.CSS
+========================================================= */
+
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root {
+    --bg-main: #07111f;
+    --bg-deep: #050b14;
+
+    --bg-card: #101f34;
+    --bg-card-secondary: #0c192b;
+
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --blue-soft: #60a5fa;
+
+    --text-main: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+
+    --border: #223652;
+
+    --danger: #ef4444;
+    --success: #22c55e;
+}
+
+
+/* =========================================================
+   GENERAL
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at top,
+            #0d1e36 0%,
+            #07111f 45%,
+            #050b14 100%
+        );
+
+    color: var(--text-main);
+}
+
+a {
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.custom-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1050;
+
+    padding: 14px 0;
+
+    background: rgba(5, 11, 20, 0.95);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border-bottom:
+        1px solid
+        rgba(148, 163, 184, 0.1);
+}
+
+.navbar-brand {
+    color: white !important;
+
+    font-size: 20px;
+}
+
+.nav-links {
+    gap: 22px;
+}
+
+.nav-link-custom {
+    padding: 8px 0;
+
+    background: transparent;
+
+    color: var(--text-secondary);
+
+    border: none;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.nav-link-custom:hover,
+.nav-link-custom:focus {
+    color: var(--blue-soft);
+
+    transform: translateY(-1px);
+}
+
+.ai-badge {
+    padding: 8px 12px;
+
+    background:
+        rgba(37, 99, 235, 0.15);
+
+    color: var(--blue-soft);
+
+    border:
+        1px solid
+        rgba(96, 165, 250, 0.15);
+
+    border-radius: 8px;
+}
+
+.nav-ai-badge {
+    margin-left: 4px;
+}
+
+.custom-navbar-toggler {
+    padding: 7px 9px;
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.22);
+
+    box-shadow: none !important;
+}
+
+.custom-navbar-toggler .navbar-toggler-icon {
+    filter:
+        brightness(0)
+        invert(1);
+}
+
+#home,
+#howItWorks,
+#tutorial,
+#faq {
+    scroll-margin-top: 90px;
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.primary-button {
+    padding: 11px 22px;
+
+    background: var(--primary);
+
+    color: white;
+
+    border: none;
+
+    border-radius: 9px;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    transition: 0.2s ease;
+}
+
+.primary-button:hover {
+    background: var(--primary-hover);
+
+    color: white;
+
+    transform: translateY(-1px);
+}
+
+.primary-button:disabled {
+    background: #334155;
+
+    color: #94a3b8;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+/* =========================================================
+   COMMON
+========================================================= */
+
+.section-heading {
+    max-width: 700px;
+
+    margin: 0 auto 40px;
+}
+
+.section-label,
+.hero-label {
+    color: var(--blue-soft);
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.4px;
+}
+
+.section-heading h2 {
+    color: white;
+}
+
+.section-description {
+    max-width: 620px;
+
+    margin: 12px auto 0;
+
+    color: var(--text-muted);
+
+    line-height: 1.7;
+}
+
+.text-muted-custom {
+    color: var(--text-muted) !important;
+}
+
+
+/* =========================================================
+   LANDING HERO
+========================================================= */
+
+.landing-hero {
+    min-height: 560px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 80px 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0d2038 0%,
+            #0b1b30 50%,
+            #09182a 100%
+        );
+
+    border-bottom:
+        1px solid
+        rgba(96, 165, 250, 0.12);
+}
+
+.landing-content {
+    max-width: 900px;
+
+    margin: auto;
+}
+
+.landing-title {
+    max-width: 850px;
+
+    margin: 18px auto;
+
+    color: white;
+
+    font-size: 58px;
+
+    font-weight: 800;
+
+    line-height: 1.1;
+}
+
+.landing-description {
+    max-width: 680px;
+
+    margin: 0 auto 28px;
+
+    color: var(--text-secondary);
+
+    font-size: 18px;
+
+    line-height: 1.7;
+}
+
+.landing-button {
+    min-width: 160px;
+}
+
+.landing-helper-text {
+    margin-top: 16px;
+
+    color: var(--text-muted);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   HOW IT WORKS
+========================================================= */
+
+.how-section {
+    padding: 85px 0;
+}
+
+.process-card {
+    position: relative;
+
+    height: 100%;
+
+    padding: 30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #101f34,
+            #0c192b
+        );
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.12);
+
+    border-radius: 16px;
+}
+
+.process-step {
+    display: inline-block;
+
+    padding: 6px 10px;
+
+    margin-bottom: 18px;
+
+    background:
+        rgba(37, 99, 235, 0.13);
+
+    color: var(--blue-soft);
+
+    border-radius: 7px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+.process-icon {
+    margin-bottom: 16px;
+
+    font-size: 28px;
+}
+
+.process-card h4 {
+    margin-bottom: 12px;
+
+    color: white;
+}
+
+.process-card p {
+    margin: 0;
+
+    color: var(--text-muted);
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   TUTORIAL
+========================================================= */
+
+.tutorial-section {
+    padding: 85px 0;
+}
+
+.device-tabs {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-bottom: 35px;
+}
+
+.device-tab {
+    padding: 10px 20px;
+
+    background: var(--bg-card);
+
+    color: var(--text-secondary);
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.15);
+
+    border-radius: 9px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.device-tab:hover {
+    border-color:
+        rgba(96, 165, 250, 0.35);
+
+    color: white;
+}
+
+.device-tab.active {
+    background: var(--primary);
+
+    color: white;
+
+    border-color: var(--primary);
+}
+
+
+/* =========================================================
+   TUTORIAL GRID
+========================================================= */
+
+.tutorial-grid {
+    max-width: 1000px;
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 24px;
+}
+
+.tutorial-card {
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            #101f34,
+            #0c192b
+        );
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.12);
+
+    border-radius: 16px;
+}
+
+.tutorial-step-label {
+    position: absolute;
+
+    top: 14px;
+
+    left: 14px;
+
+    z-index: 2;
+
+    padding: 6px 10px;
+
+    background:
+        rgba(5, 11, 20, 0.85);
+
+    color: var(--blue-soft);
+
+    border-radius: 7px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+.tutorial-image-box {
+    width: 100%;
+
+    height: 290px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+
+    background: #0c192b;
+}
+
+.tutorial-image {
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+.tutorial-card-content {
+    padding: 22px;
+}
+
+.tutorial-card-content h4 {
+    margin-bottom: 10px;
+
+    color: white;
+}
+
+.tutorial-card-content p {
+    margin: 0;
+
+    color: var(--text-muted);
+
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   FAQ
+========================================================= */
+
+.faq-section {
+    max-width: 850px;
+
+    margin: 85px auto 0;
+}
+
+.faq-accordion {
+    margin-top: 35px;
+}
+
+.faq-accordion .accordion-item {
+    margin-bottom: 12px;
+
+    background: #101f34;
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.14);
+
+    border-radius: 12px;
+
+    overflow: hidden;
+}
+
+.faq-accordion .accordion-button {
+    padding: 18px 20px;
+
+    background: #101f34;
+
+    color: #f8fafc;
+
+    font-weight: 600;
+
+    box-shadow: none;
+}
+
+.faq-accordion .accordion-button:hover {
+    background: #132640;
+}
+
+.faq-accordion .accordion-button:not(.collapsed) {
+    background: #132640;
+
+    color: #60a5fa;
+}
+
+.faq-accordion .accordion-button:focus {
+    box-shadow: none;
+
+    border-color: transparent;
+}
+
+.faq-accordion .accordion-button::after {
+    filter:
+        brightness(0)
+        invert(1);
+}
+
+.faq-accordion .accordion-body {
+    padding: 5px 20px 20px;
+
+    background: #101f34;
+
+    color: #94a3b8;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   FINAL CTA
+========================================================= */
+
+.start-analysis-card {
+    max-width: 760px;
+
+    margin: 85px auto 0;
+
+    padding: 45px 30px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            #10233d,
+            #0b1829
+        );
+
+    border:
+        1px solid
+        rgba(96, 165, 250, 0.16);
+
+    border-radius: 18px;
+}
+
+.start-analysis-icon {
+    margin-bottom: 15px;
+
+    font-size: 30px;
+}
+
+.start-analysis-card p {
+    max-width: 520px;
+
+    margin: 12px auto 22px;
+
+    color: var(--text-muted);
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   UPLOAD HERO
+========================================================= */
+
+.upload-hero {
+    padding: 70px 0 55px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0d2038 0%,
+            #0b1b30 50%,
+            #09182a 100%
+        );
+
+    border-bottom:
+        1px solid
+        rgba(96, 165, 250, 0.12);
+}
+
+.upload-hero h1 {
+    color: white;
+
+    font-size: 42px;
+}
+
+.upload-hero-description {
+    max-width: 650px;
+
+    margin: 15px auto 0;
+
+    color: var(--text-muted);
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   UPLOAD
+========================================================= */
+
+.upload-container {
+    max-width: 760px;
+
+    padding-top: 55px;
+
+    padding-bottom: 90px;
+}
+
+.upload-card {
+    padding: 34px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #101f34,
+            #0c192b
+        );
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.13);
+
+    border-radius: 18px;
+}
+
+.back-button {
+    margin-bottom: 25px;
+
+    padding: 0;
+
+    background: transparent;
+
+    color: var(--blue-soft);
+
+    border: none;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+.back-button:hover {
+    color: #93c5fd;
+}
+
+.upload-icon {
+    font-size: 34px;
+}
+
+
+/* =========================================================
+   CONSENT
+========================================================= */
+
+.consent-section {
+    margin-top: 30px;
+
+    padding: 18px 18px 18px 42px;
+
+    background:
+        rgba(37, 99, 235, 0.07);
+
+    border:
+        1px solid
+        rgba(96, 165, 250, 0.14);
+
+    border-radius: 10px;
+}
+
+.consent-section .form-check-label {
+    color: var(--text-secondary);
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+.consent-section .form-check-input {
+    background-color: #0c192b;
+
+    border-color: #475569;
+}
+
+.consent-section .form-check-input:checked {
+    background-color: var(--primary);
+
+    border-color: var(--primary);
+}
+
+
+/* =========================================================
+   PRIVACY LINK
+========================================================= */
+
+.privacy-link {
+    color: #60a5fa;
+
+    text-decoration: underline;
+
+    font-weight: 600;
+}
+
+.privacy-link:hover {
+    color: #93c5fd;
+
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   FILE UPLOAD
+========================================================= */
+
+.file-upload-row {
+    display: flex;
+
+    align-items: stretch;
+
+    width: 100%;
+
+    overflow: hidden;
+
+    background: #081525;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 10px;
+}
+
+.custom-file-button {
+    padding: 12px 18px;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    border: none;
+
+    border-right:
+        1px solid
+        #2563eb;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.custom-file-button:hover:not(:disabled) {
+    background: #1d4ed8;
+}
+
+.custom-file-button:disabled {
+    background: #2563eb;
+
+    color: #ffffff;
+
+    opacity: 0.55;
+
+    cursor: not-allowed;
+}
+
+.file-name-display {
+    flex: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 12px 15px;
+
+    color: var(--text-muted);
+
+    font-size: 14px;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+.custom-form-text {
+    display: block;
+
+    margin-top: 9px;
+
+    color: var(--text-muted);
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   ANALYZE BUTTON
+========================================================= */
+
+.analyze-button-wrapper {
+    margin-top: 28px;
+
+    text-align: center;
+}
+
+.analyze-button-small {
+    width: auto !important;
+
+    min-width: 180px;
+
+    padding: 11px 28px;
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   PRIVACY MODAL
+========================================================= */
+
+.custom-modal {
+    background: #101f34;
+
+    color: white;
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.18);
+
+    border-radius: 14px;
+}
+
+.custom-modal .modal-header {
+    border-bottom:
+        1px solid
+        rgba(148, 163, 184, 0.12);
+}
+
+.custom-modal .modal-footer {
+    border-top:
+        1px solid
+        rgba(148, 163, 184, 0.12);
+}
+
+.custom-modal .modal-body {
+    color: var(--text-secondary);
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   RESULT HERO
+========================================================= */
+
+.result-hero {
+    padding: 70px 0 60px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0d2038 0%,
+            #0b1b30 50%,
+            #09182a 100%
+        );
+
+    border-bottom:
+        1px solid
+        rgba(96, 165, 250, 0.12);
+}
+
+.result-heading {
+    max-width: 800px;
+
+    margin: 0 auto;
+}
+
+.result-heading h1 {
+    color: white;
+
+    font-size: 43px;
+}
+
+.result-intro {
+    max-width: 680px;
+
+    margin: 12px auto 0;
+
+    color: var(--text-muted);
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   RESULT PAGE
+========================================================= */
+
+.result-page {
+    padding: 70px 0 20px;
+}
+
+.result-section {
+    margin-bottom: 80px;
+}
+
+
+/* =========================================================
+   RESULT SUMMARY
+========================================================= */
+
+.result-card {
+    height: 100%;
+
+    padding: 25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #101f34,
+            #0c192b
+        );
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.12);
+
+    border-radius: 16px;
+}
+
+.summary-icon {
+    margin-bottom: 16px;
+
+    font-size: 23px;
+}
+
+.summary-label {
+    margin-bottom: 8px;
+
+    color: var(--text-muted);
+}
+
+.scam-summary {
+    background:
+        rgba(239, 68, 68, 0.08);
+
+    border:
+        1px solid
+        rgba(239, 68, 68, 0.20);
+
+    border-left:
+        4px solid
+        #ef4444;
+}
+
+.legit-summary {
+    background:
+        rgba(34, 197, 94, 0.08);
+
+    border:
+        1px solid
+        rgba(34, 197, 94, 0.20);
+
+    border-left:
+        4px solid
+        #22c55e;
+}
+
+.scam-text {
+    color: #ef4444 !important;
+}
+
+.legit-text {
+    color: #22c55e !important;
+}
+
+
+/* =========================================================
+   RISK
+========================================================= */
+
+.risk-card,
+.risk-meter-card {
+    background:
+        linear-gradient(
+            145deg,
+            #101f34,
+            #0c192b
+        );
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.12);
+
+    border-radius: 18px;
+}
+
+.risk-card {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 38px 30px;
+}
+
+.risk-meter-card {
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    padding: 30px;
+}
+
+.risk-title {
+    margin: 0;
+
+    color: #f8fafc;
+
+    font-size: 24px;
+
+    font-weight: 700;
+}
+
+.risk-score {
+    margin: 22px 0 18px;
+
+    color: #ffffff;
+
+    font-size:
+        clamp(
+            44px,
+            5vw,
+            64px
+        );
+
+    font-weight: 800;
+
+    line-height: 1;
+
+    max-width: 100%;
+}
+
+.risk-badge {
+    padding: 10px 18px;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+.risk-explanation {
+    max-width: 530px;
+
+    margin: 25px auto 0;
+
+    color: #94a3b8;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   RISK METER
+========================================================= */
+
+.risk-meter-card h4 {
+    margin-bottom: 8px;
+
+    color: #f8fafc;
+
+    font-size: 24px;
+
+    font-weight: 700;
+}
+
+.risk-meter-description {
+    max-width: 480px;
+
+    margin: 0 auto 15px;
+
+    color: #94a3b8;
+
+    font-size: 15px;
+
+    line-height: 1.7;
+}
+
+.risk-chart-wrapper {
+    width: 100%;
+
+    max-width: 300px;
+
+    height: 190px;
+
+    margin: 0 auto;
+}
+
+.risk-meter-legend {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 28px;
+
+    flex-wrap: wrap;
+
+    margin-top: 5px;
+}
+
+.risk-legend-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color: #cbd5e1;
+
+    font-size: 13px;
+}
+
+.legend-dot {
+    width: 10px;
+
+    height: 10px;
+
+    display: inline-block;
+
+    border-radius: 50%;
+}
+
+.scam-dot {
+    background: #ef4444;
+}
+
+.remaining-dot {
+    background: #2563eb;
+}
+
+.remaining-text {
+    color: #3b82f6;
+}
+
+
+/* =========================================================
+   MESSAGE ANALYSIS
+========================================================= */
+
+.message-analysis-list {
+    max-width: 950px;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 16px;
+}
+
+.message-analysis-card {
+    padding: 22px;
+
+    border-radius: 14px;
+}
+
+.scam-message-card {
+    background:
+        rgba(239, 68, 68, 0.08);
+
+    border:
+        1px solid
+        rgba(239, 68, 68, 0.22);
+
+    border-left:
+        4px solid
+        #ef4444;
+}
+
+.legit-message-card {
+    background:
+        rgba(34, 197, 94, 0.08);
+
+    border:
+        1px solid
+        rgba(34, 197, 94, 0.22);
+
+    border-left:
+        4px solid
+        #22c55e;
+}
+
+.message-analysis-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 14px;
+}
+
+.message-status {
+    font-weight: 700;
+
+    font-size: 14px;
+}
+
+.scam-status {
+    color: var(--danger);
+}
+
+.legit-status {
+    color: var(--success);
+}
+
+.message-probability {
+    font-size: 18px;
+
+    font-weight: 700;
+}
+
+.message-text {
+    margin-bottom: 10px;
+
+    color: var(--text-main);
+
+    line-height: 1.7;
+
+    overflow-wrap: anywhere;
+}
+
+.message-probability-label {
+    color: var(--text-muted);
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   SUPPORTING ANALYSIS
+========================================================= */
+
+.supporting-card {
+    max-width: 950px;
+
+    margin: 0 auto;
+
+    padding: 25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #101f34,
+            #0c192b
+        );
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.12);
+
+    border-radius: 16px;
+}
+
+.supporting-notice {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 16px;
+}
+
+.supporting-notice-icon {
+    width: 42px;
+
+    height: 42px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        rgba(37, 99, 235, 0.13);
+
+    border-radius: 10px;
+
+    font-size: 19px;
+}
+
+.supporting-notice p {
+    color: var(--text-muted);
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   INCIDENT
+========================================================= */
+
+.incident-card {
+    max-width: 950px;
+
+    margin: 0 auto;
+
+    padding: 32px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #101f34,
+            #0c192b
+        );
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.12);
+
+    border-radius: 17px;
+}
+
+.incident-card .form-label {
+    color: var(--text-secondary);
+
+    font-size: 14px;
+}
+
+.custom-input {
+    padding: 12px 14px;
+
+    background: #081525;
+
+    color: white;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 9px;
+}
+
+.custom-input:focus {
+    background: #081525;
+
+    color: white;
+
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 0.2rem
+        rgba(37, 99, 235, 0.13);
+}
+
+.custom-input::placeholder {
+    color: #64748b;
+}
+
+textarea.custom-input {
+    resize: vertical;
+}
+
+input[type="date"].custom-input {
+    color-scheme: dark;
+}
+
+
+/* =========================================================
+   DOWNLOAD REPORT
+========================================================= */
+
+.download-report-card {
+    max-width: 950px;
+
+    margin: 0 auto;
+
+    padding: 42px 30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #10233d,
+            #0b1829
+        );
+
+    border:
+        1px solid
+        rgba(96, 165, 250, 0.16);
+
+    border-radius: 18px;
+}
+
+.download-report-icon {
+    margin-bottom: 14px;
+
+    font-size: 31px;
+}
+
+.download-report-card p {
+    max-width: 560px;
+
+    margin: 12px auto 22px;
+
+    color: var(--text-muted);
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   DISCLAIMER
+========================================================= */
+
+.disclaimer-card {
+    max-width: 950px;
+
+    margin: 0 auto;
+
+    padding: 24px;
+
+    background:
+        rgba(245, 158, 11, 0.07);
+
+    border:
+        1px solid
+        rgba(245, 158, 11, 0.18);
+
+    border-radius: 14px;
+}
+
+.disclaimer-card h5 {
+    color: #fbbf24;
+}
+
+.disclaimer-card p {
+    color: var(--text-secondary);
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.alert-danger {
+    background:
+        rgba(239, 68, 68, 0.1);
+
+    color: #fecaca;
+
+    border:
+        1px solid
+        rgba(239, 68, 68, 0.25);
+
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.custom-footer {
+    background:
+        rgba(5, 11, 20, 0.8);
+
+    color: var(--text-muted);
+
+    border-top:
+        1px solid
+        rgba(148, 163, 184, 0.1);
+}
+
+
+
+
+/* =========================================================
+   NAVBAR RESPONSIVE
+========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .custom-navbar .navbar-collapse {
+        margin-top: 14px;
+
+        padding: 14px 0 4px;
+
+        border-top:
+            1px solid
+            rgba(148, 163, 184, 0.12);
+    }
+
+    .nav-links {
+        align-items: stretch !important;
+
+        gap: 0;
+    }
+
+    .nav-link-custom {
+        width: 100%;
+
+        padding: 12px 4px;
+
+        text-align: left;
+    }
+
+    .nav-ai-badge {
+        width: fit-content;
+
+        margin: 8px 0 4px;
+    }
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .landing-hero {
+        min-height: auto;
+
+        padding: 80px 0 65px;
+    }
+
+    .landing-title {
+        font-size: 40px;
+    }
+
+    .landing-description {
+        font-size: 16px;
+    }
+
+    .how-section,
+    .tutorial-section {
+        padding: 65px 0;
+    }
+
+    .section-heading h2 {
+        font-size: 29px;
+    }
+
+    .tutorial-grid {
+        grid-template-columns: 1fr;
+
+        max-width: 520px;
+    }
+
+    .tutorial-image-box {
+        height: 320px;
+    }
+
+    .faq-section {
+        margin-top: 65px;
+    }
+
+    .start-analysis-card {
+        margin-top: 65px;
+    }
+
+    .upload-hero {
+        padding: 60px 0 45px;
+    }
+
+    .upload-hero h1 {
+        font-size: 34px;
+    }
+
+    .upload-container {
+        padding-top: 45px;
+    }
+
+    .upload-card {
+        padding: 27px;
+    }
+
+    .result-hero {
+        padding: 60px 0 50px;
+    }
+
+    .result-heading h1 {
+        font-size: 35px;
+    }
+
+    .result-page {
+        padding-top: 60px;
+    }
+
+    .risk-card,
+    .risk-meter-card {
+        padding: 30px 22px;
+    }
+
+    .incident-card {
+        padding: 25px;
+    }
+
+    .download-report-card {
+        padding: 36px 25px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .container {
+        padding-left: 18px;
+
+        padding-right: 18px;
+    }
+
+    .navbar-brand {
+        font-size: 16px;
+    }
+
+    .ai-badge {
+        padding: 7px 9px;
+
+        font-size: 10px;
+    }
+
+    .landing-title {
+        font-size: 34px;
+    }
+
+    .section-heading h2 {
+        font-size: 26px;
+    }
+
+    .device-tabs {
+        width: 100%;
+    }
+
+    .device-tab {
+        flex: 1;
+
+        padding: 10px 8px;
+
+        font-size: 12px;
+    }
+
+    .tutorial-image-box {
+        height: 270px;
+    }
+
+    .upload-card {
+        padding: 22px 18px;
+    }
+
+    .file-upload-row {
+        flex-direction: column;
+
+        background: transparent;
+
+        border: none;
+
+        overflow: visible;
+    }
+
+    .custom-file-button {
+        width: 100%;
+
+        background: #2563eb;
+
+        color: #ffffff;
+
+        border: none;
+
+        border-radius: 9px;
+    }
+
+    .custom-file-button:hover:not(:disabled) {
+        background: #1d4ed8;
+    }
+
+    .custom-file-button:disabled {
+        background: #2563eb;
+
+        color: #ffffff;
+
+        opacity: 0.55;
+    }
+
+    .file-name-display {
+        width: 100%;
+
+        min-height: 45px;
+
+        margin-top: 8px;
+
+        background: #081525;
+
+        border:
+            1px solid
+            var(--border);
+
+        border-radius: 9px;
+    }
+
+    .analyze-button-small {
+        width: auto !important;
+
+        min-width: 165px;
+    }
+
+    .result-hero {
+        padding: 50px 0 45px;
+    }
+
+    .result-heading h1 {
+        font-size: 30px;
+    }
+
+    .result-page {
+        padding-top: 50px;
+    }
+
+    .risk-score {
+        font-size: 46px;
+    }
+
+    .risk-meter-legend {
+        gap: 14px;
+    }
+
+    .risk-legend-item {
+        font-size: 12px;
+    }
+
+    .message-analysis-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 7px;
+    }
+
+    .supporting-notice {
+        flex-direction: column;
+    }
+
+    .incident-card {
+        padding: 21px 18px;
+    }
+
+    .download-report-card {
+        padding: 34px 20px;
+    }
+
+}
