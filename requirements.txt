@@ -3,4 +3,3 @@ scikit-learn
 numpy
 scipy
 reportlab
-gunicorn

@@ -4,202 +4,175 @@ import re
 import os
 import uuid
 
-from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.platypus import (
+    SimpleDocTemplate,
+    Paragraph,
+    Spacer,
+    Table,
+    TableStyle
+)
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.enums import TA_CENTER
-from reportlab.lib.units import inch
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
 
 
 app = Flask(__name__)
 
-# =========================
-# BASIC FILE SECURITY
-# =========================
-
-# Maximum upload size = 5 MB
+# Maximum upload size: 5 MB
 app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024
 
 
-# =========================
+# =========================================================
 # LOAD AI MODEL
-# =========================
+# =========================================================
 
-model = pickle.load(
-    open("scam_model.pkl", "rb")
-)
+try:
+    model = pickle.load(open("scam_model.pkl", "rb"))
+    vectorizer = pickle.load(open("vectorizer.pkl", "rb"))
+except Exception as e:
+    print("Error loading model:", e)
+    model = None
+    vectorizer = None
 
-vectorizer = pickle.load(
-    open("vectorizer.pkl", "rb")
-)
 
-
-# =========================
+# =========================================================
 # TEXT CLEANING
-# =========================
+# =========================================================
 
 def clean_text(text):
-
     text = text.lower()
-
-    text = re.sub(
-        r'[^a-zA-Z]',
-        ' ',
-        text
-    )
-
-    text = re.sub(
-        r'\s+',
-        ' ',
-        text
-    )
-
-    return text.strip()
+    text = re.sub(r"[^a-zA-Z\s]", " ", text)
+    text = re.sub(r"\s+", " ", text).strip()
+    return text
 
 
-# =========================
-# CHECK WHATSAPP FORMAT
-# =========================
+# =========================================================
+# WHATSAPP MESSAGE VALIDATION
+# =========================================================
 
-def is_whatsapp_message(text):
+def is_whatsapp_message(line):
 
     # Format:
     # [8/25/26, 10:30:15 PM] Ali: Hello
-    pattern_1 = r'^\[\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}(?::\d{2})?\s?(?:AM|PM)?\]\s.*?:\s.+'
+
+    pattern1 = r"^\[\d{1,2}/\d{1,2}/\d{2,4},\s*\d{1,2}:\d{2}(?::\d{2})?\s*(?:AM|PM)?\]\s*.*?:\s*.*"
 
     # Format:
     # 25/8/2026, 10:30 - Ali: Hello
-    pattern_2 = r'^\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}\s-\s.*?:\s.+'
 
-    if re.match(pattern_1, text):
-        return True
+    pattern2 = r"^\d{1,2}/\d{1,2}/\d{2,4},\s*\d{1,2}:\d{2}\s*-\s*.*?:\s*.*"
 
-    if re.match(pattern_2, text):
-        return True
-
-    return False
+    return bool(
+        re.match(pattern1, line) or
+        re.match(pattern2, line)
+    )
 
 
-# =========================
-# EXTRACT WHATSAPP MESSAGE
-# =========================
+# =========================================================
+# EXTRACT MESSAGE CONTENT
+# =========================================================
 
-def extract_message(text):
+def extract_message(line):
 
     # Format:
     # [8/25/26, 10:30:15 PM] Ali: Hello
-    pattern_1 = r'^\[\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}(?::\d{2})?\s?(?:AM|PM)?\]\s.*?:\s(.*)'
 
-    match = re.search(
-        pattern_1,
-        text
+    match1 = re.match(
+        r"^\[\d{1,2}/\d{1,2}/\d{2,4},\s*\d{1,2}:\d{2}(?::\d{2})?\s*(?:AM|PM)?\]\s*.*?:\s*(.*)",
+        line
     )
 
-    if match:
-        return match.group(1)
+    if match1:
+        return match1.group(1).strip()
 
     # Format:
     # 25/8/2026, 10:30 - Ali: Hello
-    pattern_2 = r'^\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}\s-\s.*?:\s(.*)'
 
-    match = re.search(
-        pattern_2,
-        text
+    match2 = re.match(
+        r"^\d{1,2}/\d{1,2}/\d{2,4},\s*\d{1,2}:\d{2}\s*-\s*.*?:\s*(.*)",
+        line
     )
 
-    if match:
-        return match.group(1)
+    if match2:
+        return match2.group(1).strip()
 
-    return ""
-
-
-# =========================
-# PREDICTION
-# =========================
-
-def predict_message(msg):
-
-    msg = extract_message(msg)
-
-    msg = clean_text(msg)
-
-    data = vectorizer.transform(
-        [msg]
-    )
-
-    result = model.predict(
-        data
-    )
-
-    return result[0]
+    return None
 
 
-# =========================
+# =========================================================
+# AI PREDICTION
+# =========================================================
+
+def predict_message(message):
+
+    if model is None or vectorizer is None:
+        return "Error"
+
+    cleaned = clean_text(message)
+
+    data = vectorizer.transform([cleaned])
+
+    prediction = model.predict(data)[0]
+
+    if prediction == 1:
+        return "Scam"
+
+    return "Legitimate"
+
+
+# =========================================================
 # SCAM PROBABILITY
-# =========================
+# =========================================================
 
-def predict_probability(msg):
+def predict_probability(message):
 
-    msg = extract_message(msg)
+    if model is None or vectorizer is None:
+        return 0.0
 
-    msg = clean_text(msg)
+    cleaned = clean_text(message)
 
-    data = vectorizer.transform(
-        [msg]
-    )
+    data = vectorizer.transform([cleaned])
 
-    probabilities = model.predict_proba(
-        data
-    )
+    probabilities = model.predict_proba(data)
 
     # Class 1 = Scam
     scam_probability = probabilities[0][1]
 
-    return scam_probability
+    return float(scam_probability)
 
 
-# =========================
-# HOME PAGE
-# =========================
-
-@app.route('/')
-def home():
-
-    return render_template(
-        'index.html'
-    )
-
-
-# =========================
-# GENERATE PDF
-# =========================
+# =========================================================
+# GENERATE PDF REPORT
+# =========================================================
 
 def generate_pdf(
-    report_id,
-    total_count,
+    total_messages,
     scam_count,
-    legit_count,
+    legitimate_count,
     risk_score,
     risk_level,
     results
 ):
 
-    os.makedirs(
+    os.makedirs("reports", exist_ok=True)
+
+    report_id = str(uuid.uuid4())
+
+    file_path = os.path.join(
         "reports",
-        exist_ok=True
+        f"report_{report_id}.pdf"
     )
 
-    filename = f"{report_id}.pdf"
+    styles = getSampleStyleSheet()
 
-    filepath = os.path.join(
-        "reports",
-        filename
-    )
+    title_style = styles["Title"]
+    title_style.alignment = TA_CENTER
 
+    normal_style = styles["BodyText"]
 
     document = SimpleDocTemplate(
-        filepath,
+        file_path,
         pagesize=A4,
         rightMargin=40,
         leftMargin=40,
@@ -207,434 +180,307 @@ def generate_pdf(
         bottomMargin=40
     )
 
+    content = []
 
-    styles = getSampleStyleSheet()
-
-
-    title_style = ParagraphStyle(
-        "TitleStyle",
-        parent=styles["Title"],
-        alignment=TA_CENTER,
-        fontSize=18,
-        spaceAfter=20
-    )
-
-
-    heading_style = ParagraphStyle(
-        "HeadingStyle",
-        parent=styles["Heading2"],
-        fontSize=13,
-        spaceBefore=15,
-        spaceAfter=10
-    )
-
-
-    message_style = ParagraphStyle(
-        "MessageStyle",
-        parent=styles["BodyText"],
-        fontSize=9,
-        leading=12
-    )
-
-
-    story = []
-
-
-    story.append(
+    # Title
+    content.append(
         Paragraph(
-            "AI SCAM CHAT DETECTION REPORT",
+            "VeriChat AI - Scam Chat Analysis Report",
             title_style
         )
     )
 
+    content.append(Spacer(1, 20))
 
-    story.append(
+    # Summary
+    content.append(
         Paragraph(
-            "WhatsApp Chat Analysis",
-            styles["Normal"]
+            "<b>Analysis Summary</b>",
+            styles["Heading2"]
         )
     )
 
-
-    story.append(
-        Spacer(
-            1,
-            20
-        )
-    )
-
-
-    story.append(
-        Paragraph(
-            "Analysis Summary",
-            heading_style
-        )
-    )
-
+    content.append(Spacer(1, 10))
 
     summary_data = [
-
-        ["Total Messages", str(total_count)],
-
+        ["Total Messages", str(total_messages)],
         ["Scam Messages", str(scam_count)],
-
-        ["Legitimate Messages", str(legit_count)],
-
-        ["AI Scam Risk Score", f"{risk_score:.2f}%"],
-
+        ["Legitimate Messages", str(legitimate_count)],
+        ["Scam Risk Score", f"{risk_score:.2f}%"],
         ["Risk Level", risk_level]
-
     ]
-
 
     summary_table = Table(
         summary_data,
-        colWidths=[
-            2.5 * inch,
-            2.5 * inch
-        ]
+        colWidths=[200, 200]
     )
-
 
     summary_table.setStyle(
         TableStyle([
-
-            (
-                "BACKGROUND",
-                (0, 0),
-                (0, -1),
-                colors.lightgrey
-            ),
-
-            (
-                "GRID",
-                (0, 0),
-                (-1, -1),
-                0.5,
-                colors.grey
-            ),
-
-            (
-                "PADDING",
-                (0, 0),
-                (-1, -1),
-                7
-            )
-
+            ("GRID", (0, 0), (-1, -1), 0.5, colors.grey),
+            ("BACKGROUND", (0, 0), (0, -1), colors.lightgrey),
+            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+            ("PADDING", (0, 0), (-1, -1), 8)
         ])
     )
 
+    content.append(summary_table)
 
-    story.append(
-        summary_table
-    )
+    content.append(Spacer(1, 20))
 
-
-    story.append(
-        Spacer(
-            1,
-            20
-        )
-    )
-
-
-    story.append(
+    # Message Analysis
+    content.append(
         Paragraph(
-            "Message Analysis",
-            heading_style
+            "<b>Message Analysis</b>",
+            styles["Heading2"]
         )
     )
 
+    content.append(Spacer(1, 10))
 
-    for index, result in enumerate(
-        results,
-        start=1
-    ):
+    for index, item in enumerate(results, start=1):
 
-        status = result["status"]
+        prediction = item["prediction"]
 
-        message = result["message"]
+        if prediction == "Scam":
+            status = "SCAM"
+        else:
+            status = "LEGITIMATE"
 
+        probability = item["probability"] * 100
 
-        message = message.encode(
-            "ascii",
-            "ignore"
-        ).decode(
-            "ascii"
-        )
+        message = item["message"]
 
-
-        story.append(
+        content.append(
             Paragraph(
-                f"<b>{index}. {status}</b>",
-                message_style
+                f"<b>Message {index}</b>",
+                styles["Heading3"]
             )
         )
 
-
-        story.append(
+        content.append(
             Paragraph(
-                message,
-                message_style
+                f"<b>Status:</b> {status}",
+                normal_style
             )
         )
 
-
-        story.append(
-            Spacer(
-                1,
-                8
+        content.append(
+            Paragraph(
+                f"<b>Scam Probability:</b> {probability:.2f}%",
+                normal_style
             )
         )
 
+        content.append(
+            Paragraph(
+                f"<b>Message:</b> {message}",
+                normal_style
+            )
+        )
 
-    document.build(
-        story
+        content.append(Spacer(1, 10))
+
+    content.append(Spacer(1, 20))
+
+    content.append(
+        Paragraph(
+            "<b>Disclaimer:</b> The prediction provided by VeriChat AI "
+            "is an AI-based assessment and should not be treated as "
+            "definitive proof that a message is a scam.",
+            normal_style
+        )
+    )
+
+    document.build(content)
+
+    return report_id
+
+
+# =========================================================
+# HOME PAGE
+# =========================================================
+
+@app.route("/")
+def home():
+
+    return render_template(
+        "index.html"
     )
 
 
-    return filepath
+# =========================================================
+# PREDICT / ANALYZE CHAT
+# =========================================================
 
-
-# =========================
-# ANALYZE CHAT
-# =========================
-
-@app.route(
-    '/predict',
-    methods=['POST']
-)
+@app.route("/predict", methods=["POST"])
 def predict():
 
-    # =========================
-    # CHECK FILE EXISTENCE
-    # =========================
+    # -----------------------------------------------------
+    # CHECK CONSENT
+    # -----------------------------------------------------
 
-    if 'file' not in request.files:
+    consent = request.form.get("consentCheckbox")
+
+    if consent != "on":
 
         return render_template(
-            'index.html',
-            error="No file was uploaded. Please select a WhatsApp chat file."
+            "index.html",
+            error="Please agree to the privacy notice before uploading your chat."
         )
 
 
-    file = request.files['file']
+    # -----------------------------------------------------
+    # CHECK FILE
+    # -----------------------------------------------------
 
-
-    # =========================
-    # CHECK EMPTY FILENAME
-    # =========================
-
-    if file.filename == '':
+    if "file" not in request.files:
 
         return render_template(
-            'index.html',
-            error="No file was selected. Please choose a file to analyze."
+            "index.html",
+            error="No file was uploaded."
+        )
+
+    file = request.files["file"]
+
+
+    # -----------------------------------------------------
+    # CHECK FILE NAME
+    # -----------------------------------------------------
+
+    if file.filename == "":
+
+        return render_template(
+            "index.html",
+            error="Please select a file."
         )
 
 
-    # =========================
+    # -----------------------------------------------------
     # CHECK FILE EXTENSION
-    # =========================
+    # -----------------------------------------------------
 
-    if not file.filename.lower().endswith('.txt'):
+    if not file.filename.lower().endswith(".txt"):
 
         return render_template(
-            'index.html',
-            error="Invalid file type. Please upload a WhatsApp chat file in .txt format."
+            "index.html",
+            error="Invalid file type. Please upload a WhatsApp .txt file."
         )
 
 
-    # =========================
+    # -----------------------------------------------------
     # READ FILE
-    # =========================
+    # -----------------------------------------------------
 
     try:
 
-        chat = file.read().decode(
-            'utf-8',
-            errors='ignore'
-        )
+        file_content = file.read().decode("utf-8")
 
-    except Exception:
+    except UnicodeDecodeError:
 
         return render_template(
-            'index.html',
-            error="The uploaded file could not be read. Please try another .txt file."
+            "index.html",
+            error="Unable to read the file. Please make sure it is a valid UTF-8 WhatsApp .txt file."
         )
 
 
-    # =========================
-    # CHECK EMPTY FILE
-    # =========================
+    # -----------------------------------------------------
+    # EMPTY FILE CHECK
+    # -----------------------------------------------------
 
-    if not chat.strip():
+    if not file_content.strip():
 
         return render_template(
-            'index.html',
-            error="The uploaded file is empty. Please upload a WhatsApp chat containing messages."
+            "index.html",
+            error="The uploaded file is empty."
         )
 
 
-    messages = chat.split("\n")
+    # -----------------------------------------------------
+    # FIND VALID WHATSAPP MESSAGES
+    # -----------------------------------------------------
+
+    lines = file_content.splitlines()
+
+    messages = []
+
+    for line in lines:
+
+        if is_whatsapp_message(line):
+
+            message = extract_message(line)
+
+            if message:
+
+                messages.append(message)
 
 
-    # =========================
+    # -----------------------------------------------------
     # CHECK WHATSAPP FORMAT
-    # =========================
+    # -----------------------------------------------------
 
-    whatsapp_message_count = 0
-
-    for msg in messages:
-
-        msg = msg.strip()
-
-        if msg == "":
-            continue
-
-        if is_whatsapp_message(msg):
-
-            whatsapp_message_count += 1
-
-
-    # No WhatsApp formatted messages found
-    if whatsapp_message_count == 0:
+    if len(messages) < 2:
 
         return render_template(
-            'index.html',
-            error="Invalid WhatsApp chat format. Please upload a chat exported directly from WhatsApp in .txt format."
+            "index.html",
+            error="Invalid WhatsApp chat file. Please upload a valid exported WhatsApp chat."
         )
 
 
-    # =========================
-    # VARIABLES
-    # =========================
+    # =====================================================
+    # ANALYSIS
+    # =====================================================
 
     results = []
 
     scam_count = 0
-
-    legit_count = 0
-
-    total_count = 0
+    legitimate_count = 0
 
     scam_probabilities = []
 
 
-    # =========================
-    # ANALYZE EACH MESSAGE
-    # =========================
+    for message in messages:
 
-    for msg in messages:
+        prediction = predict_message(message)
 
-        msg = msg.strip()
+        probability = predict_probability(message)
 
+        results.append({
+            "message": message,
+            "prediction": prediction,
+            "probability": probability
+        })
 
-        if msg == "":
-            continue
+        scam_probabilities.append(probability)
 
-
-        # Ignore non-message lines
-        if not is_whatsapp_message(msg):
-            continue
-
-
-        extracted = extract_message(msg)
-
-
-        if not extracted.strip():
-            continue
-
-
-        total_count += 1
-
-
-        try:
-
-            # Predict classification
-            pred = predict_message(msg)
-
-
-            # Get scam probability
-            scam_probability = predict_probability(
-                msg
-            )
-
-
-        except Exception:
-
-            return render_template(
-                'index.html',
-                error="The system could not process the uploaded chat. Please make sure it is a valid WhatsApp exported .txt file."
-            )
-
-
-        scam_probabilities.append(
-            scam_probability
-        )
-
-
-        # =========================
-        # SCAM
-        # =========================
-
-        if pred == 1:
+        if prediction == "Scam":
 
             scam_count += 1
 
-            results.append({
-
-                "message": msg,
-
-                "status": "SCAM"
-
-            })
-
-
-        # =========================
-        # LEGITIMATE
-        # =========================
-
         else:
 
-            legit_count += 1
-
-            results.append({
-
-                "message": msg,
-
-                "status": "LEGITIMATE"
-
-            })
+            legitimate_count += 1
 
 
-    # =========================
-    # CHECK VALID MESSAGES
-    # =========================
-
-    if total_count == 0:
-
-        return render_template(
-            'index.html',
-            error="No valid WhatsApp messages were found in the uploaded file."
-        )
-
-
-    # =========================
+    # =====================================================
     # RISK SCORE
-    # =========================
+    # =====================================================
 
-    risk_score = (
+    if len(scam_probabilities) > 0:
 
-        sum(scam_probabilities)
-        / len(scam_probabilities)
+        risk_score = (
+            sum(scam_probabilities)
+            / len(scam_probabilities)
+        ) * 100
 
-    ) * 100
+    else:
+
+        risk_score = 0
 
 
-    # =========================
+    # =====================================================
     # RISK LEVEL
-    # =========================
+    # =====================================================
 
     if risk_score < 40:
 
@@ -649,116 +495,92 @@ def predict():
         risk_level = "HIGH"
 
 
-    # =========================
-    # CREATE REPORT ID
-    # =========================
-
-    report_id = str(
-        uuid.uuid4()
-    )
-
-
-    # =========================
+    # =====================================================
     # GENERATE PDF
-    # =========================
+    # =====================================================
 
-    generate_pdf(
-
-        report_id,
-
-        total_count,
-
+    report_id = generate_pdf(
+        len(messages),
         scam_count,
-
-        legit_count,
-
+        legitimate_count,
         risk_score,
-
         risk_level,
-
         results
-
     )
 
 
-    # =========================
-    # SHOW RESULT
-    # =========================
+    # =====================================================
+    # DISPLAY RESULT
+    # =====================================================
 
     return render_template(
-
         "result.html",
-
-        total=total_count,
-
+        total=len(messages),
         scam=scam_count,
-
-        legit=legit_count,
-
+        legit=legitimate_count,
         risk=risk_score,
-
         level=risk_level,
-
         results=results,
-
         report_id=report_id
-
     )
 
 
-# =========================
-# DOWNLOAD PDF
-# =========================
+# =========================================================
+# DOWNLOAD REPORT
+# =========================================================
 
-@app.route(
-    '/download-report/<report_id>'
-)
+@app.route("/download-report/<report_id>")
 def download_report(report_id):
 
-    filepath = os.path.join(
+    file_path = os.path.join(
         "reports",
-        f"{report_id}.pdf"
+        f"report_{report_id}.pdf"
     )
 
+    if not os.path.exists(file_path):
 
-    if not os.path.exists(filepath):
-
-        return "Report not found."
-
+        return "Report not found.", 404
 
     return send_file(
-
-        filepath,
-
-        as_attachment=True,
-
-        download_name="AI_Scam_Chat_Report.pdf",
-
-        mimetype="application/pdf"
-
+        file_path,
+        as_attachment=True
     )
 
 
-# =========================
-# RUN SERVER
-# =========================
+# =========================================================
+# FILE TOO LARGE
+# =========================================================
 
-if __name__ == '__main__':
+@app.errorhandler(413)
+def file_too_large(error):
 
-    port = int(
-        os.environ.get(
-            'PORT',
-            5000
-        )
-    )
+    return render_template(
+        "index.html",
+        error="File is too large. Maximum file size is 5 MB."
+    ), 413
 
+
+# =========================================================
+# INTERNAL SERVER ERROR
+# =========================================================
+
+@app.errorhandler(500)
+def internal_error(error):
+
+    return render_template(
+        "index.html",
+        error="An unexpected error occurred. Please try again."
+    ), 500
+
+
+# =========================================================
+# RUN APPLICATION
+# =========================================================
+
+if __name__ == "__main__":
 
     app.run(
-
-        host='0.0.0.0',
-
-        port=port,
-
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 5000)),
         debug=False
-
     )

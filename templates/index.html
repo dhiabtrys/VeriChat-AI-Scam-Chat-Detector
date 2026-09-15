@@ -1,241 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
-    <title>AI Scam Chat Detector</title>
+    <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-    <style>
+    <title>
+        VeriChat AI - Scam Chat Detector
+    </title>
 
-        * {
-            box-sizing: border-box;
-        }
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #eef2ff, #f8fafc);
-            color: #1e293b;
-        }
-
-        /* =========================
-           NAVBAR
-        ========================= */
-
-        .navbar {
-            background: #111827;
-            color: white;
-            padding: 18px 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 22px;
-            font-weight: bold;
-        }
-
-        .badge {
-            background: #2563eb;
-            padding: 8px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-        }
-
-        /* =========================
-           HERO
-        ========================= */
-
-        .hero {
-            text-align: center;
-            padding: 70px 20px 40px;
-        }
-
-        .icon {
-            font-size: 55px;
-        }
-
-        .hero h1 {
-            font-size: 42px;
-            margin: 15px 0 10px;
-            color: #111827;
-        }
-
-        .hero p {
-            color: #64748b;
-            font-size: 17px;
-            max-width: 600px;
-            margin: auto;
-            line-height: 1.6;
-        }
-
-        /* =========================
-           UPLOAD CARD
-        ========================= */
-
-        .upload-card {
-            background: white;
-            width: 90%;
-            max-width: 650px;
-            margin: 30px auto 70px;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 35px rgba(0,0,0,0.08);
-            text-align: center;
-        }
-
-        /* =========================
-           ERROR MESSAGE
-        ========================= */
-
-        .error-message {
-            background: #fef2f2;
-            color: #dc2626;
-            border: 1px solid #fecaca;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            line-height: 1.5;
-            text-align: left;
-        }
-
-        /* =========================
-           UPLOAD AREA
-        ========================= */
-
-        .upload-area {
-            border: 2px dashed #cbd5e1;
-            border-radius: 15px;
-            padding: 35px 20px;
-            background: #f8fafc;
-            margin-bottom: 25px;
-        }
-
-        .upload-area:hover {
-            border-color: #2563eb;
-            background: #eff6ff;
-        }
-
-        .upload-icon {
-            font-size: 40px;
-            margin-bottom: 10px;
-        }
-
-        input[type="file"] {
-            margin-top: 15px;
-            padding: 10px;
-            width: 100%;
-        }
-
-        /* =========================
-           BUTTON
-        ========================= */
-
-        button {
-            border: none;
-            background: linear-gradient(135deg, #2563eb, #4f46e5);
-            color: white;
-            padding: 15px 35px;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(37,99,235,0.3);
-        }
-
-        /* =========================
-           FEATURES
-        ========================= */
-
-        .features {
-            width: 90%;
-            max-width: 1000px;
-            margin: auto;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            padding-bottom: 60px;
-        }
-
-        .feature {
-            background: white;
-            width: 280px;
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
-        }
-
-        .feature-icon {
-            font-size: 32px;
-        }
-
-        .feature h3 {
-            margin-bottom: 8px;
-        }
-
-        .feature p {
-            color: #64748b;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-
-        /* =========================
-           FOOTER
-        ========================= */
-
-        footer {
-            text-align: center;
-            background: #111827;
-            color: #94a3b8;
-            padding: 20px;
-            font-size: 13px;
-        }
-
-        /* =========================
-           MOBILE
-        ========================= */
-
-        @media (max-width: 700px) {
-
-            .hero h1 {
-                font-size: 30px;
-            }
-
-            .hero {
-                padding-top: 50px;
-            }
-
-            .upload-card {
-                padding: 25px;
-            }
-
-            .navbar {
-                padding: 15px 5%;
-            }
-
-            .logo {
-                font-size: 18px;
-            }
-
-            .badge {
-                font-size: 11px;
-                padding: 7px 10px;
-            }
-
-        }
-
-    </style>
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 
@@ -243,205 +27,1501 @@
 <body>
 
 
-<!-- =========================
+<!-- =========================================================
      NAVBAR
-========================= -->
+========================================================= -->
 
-<div class="navbar">
+<nav class="navbar navbar-expand-lg custom-navbar">
 
-    <div class="logo">
-        🛡️ VeriChat AI
-    </div>
+    <div class="container">
 
-    <div class="badge">
-        AI Powered
-    </div>
+        <a
+            class="navbar-brand fw-bold"
+            href="#home">
 
-</div>
+            🛡️ VeriChat AI
 
+        </a>
 
-<!-- =========================
-     HERO
-========================= -->
+        <button
+            class="navbar-toggler custom-navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar"
+            aria-controls="mainNavbar"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
 
-<div class="hero">
+            <span class="navbar-toggler-icon"></span>
 
-    <div class="icon">
-        🤖
-    </div>
-
-    <h1>
-        AI-Based Scam Chat Detector
-    </h1>
-
-    <p>
-        Detect suspicious scam messages using AI-powered
-        chat analysis. Upload your chat file and let the system
-        identify potentially dangerous messages.
-    </p>
-
-</div>
-
-
-<!-- =========================
-     UPLOAD CARD
-========================= -->
-
-<div class="upload-card">
-
-
-    <!-- ERROR MESSAGE -->
-
-    {% if error %}
-
-    <div class="error-message">
-
-        ⚠️ <strong>Analysis Error</strong>
-
-        <br>
-
-        {{ error }}
-
-    </div>
-
-    {% endif %}
-
-
-    <h2>
-        📁 Analyze Your Chat
-    </h2>
-
-    <p style="color:#64748b;">
-        Upload a TXT file containing your chat messages.
-    </p>
-
-
-    <!-- =========================
-         UPLOAD FORM
-    ========================= -->
-
-    <form
-        action="/predict"
-        method="POST"
-        enctype="multipart/form-data"
-    >
-
-        <div class="upload-area">
-
-            <div class="upload-icon">
-                📄
-            </div>
-
-            <strong>
-                Choose your chat file
-            </strong>
-
-            <br>
-
-            <span style="color:#64748b; font-size:14px;">
-                Supported format: .txt
-            </span>
-
-            <br>
-
-            <input
-                type="file"
-                name="file"
-                accept=".txt"
-                required
-            >
-
-        </div>
-
-
-        <button type="submit">
-            🔍 Analyze Chat
         </button>
 
-    </form>
+        <div
+            class="collapse navbar-collapse"
+            id="mainNavbar">
 
-</div>
+            <div class="navbar-nav ms-auto align-items-lg-center nav-links">
 
+                <a
+                    class="nav-link-custom"
+                    href="#home">
 
-<!-- =========================
-     FEATURES
-========================= -->
+                    Home
 
-<div class="features">
+                </a>
 
+                <a
+                    class="nav-link-custom"
+                    href="#howItWorks">
 
-    <!-- FEATURE 1 -->
+                    How It Works
 
-    <div class="feature">
+                </a>
 
-        <div class="feature-icon">
-            🤖
+                <a
+                    class="nav-link-custom"
+                    href="#tutorial">
+
+                    Tutorial
+
+                </a>
+
+                <a
+                    class="nav-link-custom"
+                    href="#faq">
+
+                    FAQ
+
+                </a>
+
+                <span class="badge ai-badge nav-ai-badge">
+                    AI Powered
+                </span>
+
+            </div>
+
         </div>
-
-        <h3>
-            AI Detection
-        </h3>
-
-        <p>
-            Automatically analyzes messages and detects
-            potential scam patterns.
-        </p>
 
     </div>
 
+</nav>
 
-    <!-- FEATURE 2 -->
 
-    <div class="feature">
+<!-- =========================================================
+     START PAGE
+========================================================= -->
 
-        <div class="feature-icon">
-            ⚠️
+<section id="startPage">
+
+
+    <!-- HERO -->
+
+    <section class="landing-hero" id="home">
+
+        <div class="container">
+
+            <div class="landing-content text-center">
+
+                <span class="hero-label">
+                    AI-POWERED SCAM CHAT ANALYSIS
+                </span>
+
+                <h1 class="landing-title">
+                    Detect Suspicious WhatsApp Messages with AI
+                </h1>
+
+                <p class="landing-description">
+
+                    VeriChat AI analyzes exported WhatsApp chats
+                    to identify suspicious messages and provide
+                    an overall scam risk score.
+
+                </p>
+
+                <button
+                    type="button"
+                    class="btn primary-button landing-button"
+                    id="getStartedButton">
+
+                    Get Started →
+
+                </button>
+
+                <p class="landing-helper-text">
+
+                    Export your WhatsApp chat without media
+                    and upload the .txt file to begin.
+
+                </p>
+
+            </div>
+
         </div>
 
-        <h3>
-            Risk Analysis
-        </h3>
+    </section>
 
-        <p>
-            Provides an overall scam risk score based on
-            the analyzed messages.
-        </p>
+
+    <!-- HOW IT WORKS -->
+
+    <section class="how-section" id="howItWorks">
+
+        <div class="container">
+
+            <div class="section-heading text-center">
+
+                <span class="section-label">
+                    SIMPLE PROCESS
+                </span>
+
+                <h2 class="fw-bold mt-2">
+                    How VeriChat AI Works
+                </h2>
+
+                <p class="section-description">
+                    Analyze your WhatsApp chat in three simple steps.
+                </p>
+
+            </div>
+
+
+            <div class="row g-4">
+
+                <div class="col-md-4">
+
+                    <div class="process-card h-100">
+
+                        <span class="process-step">
+                            01
+                        </span>
+
+                        <div class="process-icon">
+                            📤
+                        </div>
+
+                        <h4 class="fw-bold">
+                            Export Your Chat
+                        </h4>
+
+                        <p>
+
+                            Export the WhatsApp conversation
+                            you want to analyze as a .txt file
+                            without media.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <div class="process-card h-100">
+
+                        <span class="process-step">
+                            02
+                        </span>
+
+                        <div class="process-icon">
+                            🤖
+                        </div>
+
+                        <h4 class="fw-bold">
+                            Analyze with AI
+                        </h4>
+
+                        <p>
+
+                            Upload the exported chat and
+                            VeriChat AI will classify each
+                            message as potentially scam
+                            or legitimate.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <div class="process-card h-100">
+
+                        <span class="process-step">
+                            03
+                        </span>
+
+                        <div class="process-icon">
+                            📊
+                        </div>
+
+                        <h4 class="fw-bold">
+                            Review Your Results
+                        </h4>
+
+                        <p>
+
+                            View the overall scam risk score,
+                            individual message predictions,
+                            and generate a supporting
+                            analysis report.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- TUTORIAL -->
+
+    <section class="tutorial-section" id="tutorial">
+
+        <div class="container">
+
+            <div class="section-heading text-center">
+
+                <span class="section-label">
+                    WHATSAPP EXPORT GUIDE
+                </span>
+
+                <h2 class="fw-bold mt-2">
+                    How to Export Your WhatsApp Chat
+                </h2>
+
+                <p class="section-description">
+
+                    Select your device and follow the steps
+                    to export your WhatsApp chat as a .txt file.
+
+                </p>
+
+            </div>
+
+
+            <div class="device-tabs">
+
+                <button
+                    type="button"
+                    class="device-tab active"
+                    id="iosTab">
+
+                    iPhone / iOS
+
+                </button>
+
+                <button
+                    type="button"
+                    class="device-tab"
+                    id="androidTab">
+
+                    Android
+
+                </button>
+
+            </div>
+
+
+            <!-- IOS -->
+
+            <div id="iosGuide">
+
+                <div class="tutorial-grid">
+
+
+                    <div class="tutorial-card">
+
+                        <span class="tutorial-step-label">
+                            STEP 1
+                        </span>
+
+                        <div class="tutorial-image-box">
+
+                            <img
+                                src="{{ url_for('static', filename='images/ios-step1.jpeg') }}"
+                                alt="iPhone WhatsApp export step 1"
+                                class="tutorial-image">
+
+                        </div>
+
+                        <div class="tutorial-card-content">
+
+                            <h4 class="fw-bold">
+                                Open the Chat
+                            </h4>
+
+                            <p>
+                                Open the WhatsApp conversation you want to analyze.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="tutorial-card">
+
+                        <span class="tutorial-step-label">
+                            STEP 2
+                        </span>
+
+                        <div class="tutorial-image-box">
+
+                            <img
+                                src="{{ url_for('static', filename='images/ios-step2.jpeg') }}"
+                                alt="iPhone WhatsApp export step 2"
+                                class="tutorial-image">
+
+                        </div>
+
+                        <div class="tutorial-card-content">
+
+                            <h4 class="fw-bold">
+                                Open Chat Information
+                            </h4>
+
+                            <p>
+                                Tap the contact or group name at the top of the conversation.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="tutorial-card">
+
+                        <span class="tutorial-step-label">
+                            STEP 3
+                        </span>
+
+                        <div class="tutorial-image-box">
+
+                            <img
+                                src="{{ url_for('static', filename='images/ios-step3.jpeg') }}"
+                                alt="iPhone WhatsApp export step 3"
+                                class="tutorial-image">
+
+                        </div>
+
+                        <div class="tutorial-card-content">
+
+                            <h4 class="fw-bold">
+                                Export the Chat
+                            </h4>
+
+                            <p>
+                                Scroll down and select Export Chat.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="tutorial-card">
+
+                        <span class="tutorial-step-label">
+                            STEP 4
+                        </span>
+
+                        <div class="tutorial-image-box">
+
+                            <img
+                                src="{{ url_for('static', filename='images/ios-step4.jpeg') }}"
+                                alt="iPhone WhatsApp export step 4"
+                                class="tutorial-image">
+
+                        </div>
+
+                        <div class="tutorial-card-content">
+
+                            <h4 class="fw-bold">
+                                Choose Without Media
+                            </h4>
+
+                            <p>
+
+                                Select Without Media and save
+                                or share the exported .txt file.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ANDROID -->
+
+            <div
+                id="androidGuide"
+                class="d-none">
+
+                <div class="tutorial-grid">
+
+
+                    <div class="tutorial-card">
+
+                        <span class="tutorial-step-label">
+                            STEP 1
+                        </span>
+
+                        <div class="tutorial-image-box">
+
+                            <img
+                                src="{{ url_for('static', filename='images/android-step1.jpeg') }}"
+                                alt="Android WhatsApp export step 1"
+                                class="tutorial-image">
+
+                        </div>
+
+                        <div class="tutorial-card-content">
+
+                            <h4 class="fw-bold">
+                                Open the Chat
+                            </h4>
+
+                            <p>
+                                Open the WhatsApp conversation you want to analyze.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="tutorial-card">
+
+                        <span class="tutorial-step-label">
+                            STEP 2
+                        </span>
+
+                        <div class="tutorial-image-box">
+
+                            <img
+                                src="{{ url_for('static', filename='images/android-step2.jpeg') }}"
+                                alt="Android WhatsApp export step 2"
+                                class="tutorial-image">
+
+                        </div>
+
+                        <div class="tutorial-card-content">
+
+                            <h4 class="fw-bold">
+                                Open More Options
+                            </h4>
+
+                            <p>
+                                Tap the three-dot menu and select More.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="tutorial-card">
+
+                        <span class="tutorial-step-label">
+                            STEP 3
+                        </span>
+
+                        <div class="tutorial-image-box">
+
+                            <img
+                                src="{{ url_for('static', filename='images/android-step3.jpeg') }}"
+                                alt="Android WhatsApp export step 3"
+                                class="tutorial-image">
+
+                        </div>
+
+                        <div class="tutorial-card-content">
+
+                            <h4 class="fw-bold">
+                                Export the Chat
+                            </h4>
+
+                            <p>
+                                Select Export Chat from the available options.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="tutorial-card">
+
+                        <span class="tutorial-step-label">
+                            STEP 4
+                        </span>
+
+                        <div class="tutorial-image-box">
+
+                            <img
+                                src="{{ url_for('static', filename='images/android-step4.jpeg') }}"
+                                alt="Android WhatsApp export step 4"
+                                class="tutorial-image">
+
+                        </div>
+
+                        <div class="tutorial-card-content">
+
+                            <h4 class="fw-bold">
+                                Choose Without Media
+                            </h4>
+
+                            <p>
+
+                                Select Without Media and save
+                                or share the exported .txt file.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FAQ -->
+
+            <div class="faq-section" id="faq">
+
+                <div class="section-heading text-center">
+
+                    <span class="section-label">
+                        FREQUENTLY ASKED QUESTIONS
+                    </span>
+
+                    <h2 class="fw-bold mt-2">
+                        Common Questions
+                    </h2>
+
+                    <p class="section-description">
+                        Quick answers about using VeriChat AI.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="accordion faq-accordion"
+                    id="faqAccordion">
+
+
+                    <div class="accordion-item">
+
+                        <h2 class="accordion-header">
+
+                            <button
+                                class="accordion-button"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#faqOne">
+
+                                What file should I upload?
+
+                            </button>
+
+                        </h2>
+
+                        <div
+                            id="faqOne"
+                            class="accordion-collapse collapse show"
+                            data-bs-parent="#faqAccordion">
+
+                            <div class="accordion-body">
+
+                                Upload an exported WhatsApp chat
+                                in <strong>.txt</strong> format
+                                without media.
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="accordion-item">
+
+                        <h2 class="accordion-header">
+
+                            <button
+                                class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#faqTwo">
+
+                                How does VeriChat AI detect scam messages?
+
+                            </button>
+
+                        </h2>
+
+                        <div
+                            id="faqTwo"
+                            class="accordion-collapse collapse"
+                            data-bs-parent="#faqAccordion">
+
+                            <div class="accordion-body">
+
+                                VeriChat AI uses a trained
+                                machine learning model to analyze
+                                the text and classify messages
+                                as potentially scam or legitimate.
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="accordion-item">
+
+                        <h2 class="accordion-header">
+
+                            <button
+                                class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#faqThree">
+
+                                What does the scam risk score mean?
+
+                            </button>
+
+                        </h2>
+
+                        <div
+                            id="faqThree"
+                            class="accordion-collapse collapse"
+                            data-bs-parent="#faqAccordion">
+
+                            <div class="accordion-body">
+
+                                The scam risk score represents
+                                the average scam probability
+                                across all analyzed messages.
+                                A higher score indicates a
+                                higher level of suspicious content.
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="accordion-item">
+
+                        <h2 class="accordion-header">
+
+                            <button
+                                class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#faqFour">
+
+                                Is the result 100% accurate?
+
+                            </button>
+
+                        </h2>
+
+                        <div
+                            id="faqFour"
+                            class="accordion-collapse collapse"
+                            data-bs-parent="#faqAccordion">
+
+                            <div class="accordion-body">
+
+                                No. VeriChat AI provides an
+                                AI-assisted assessment and should
+                                not be treated as definitive proof
+                                that a message or person is fraudulent.
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="accordion-item">
+
+                        <h2 class="accordion-header">
+
+                            <button
+                                class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#faqFive">
+
+                                Can I use the report as evidence?
+
+                            </button>
+
+                        </h2>
+
+                        <div
+                            id="faqFive"
+                            class="accordion-collapse collapse"
+                            data-bs-parent="#faqAccordion">
+
+                            <div class="accordion-body">
+
+                                The report can be used as supporting
+                                information. Keep the original chat,
+                                screenshots, transaction receipts,
+                                and other relevant records.
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CTA -->
+
+            <div class="start-analysis-card">
+
+                <div class="start-analysis-icon">
+                    🔍
+                </div>
+
+                <h3 class="fw-bold">
+                    Ready to Analyze Your Chat?
+                </h3>
+
+                <p>
+
+                    Upload your exported WhatsApp .txt
+                    file to begin the analysis.
+
+                </p>
+
+                <button
+                    type="button"
+                    class="btn primary-button"
+                    id="startAnalysisButton">
+
+                    Start Analysis →
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</section>
+
+
+<!-- =========================================================
+     UPLOAD PAGE
+========================================================= -->
+
+<section
+    id="uploadPage"
+    class="d-none">
+
+
+    <section class="upload-hero">
+
+        <div class="container text-center">
+
+            <span class="hero-label">
+                AI-POWERED SCAM CHAT ANALYSIS
+            </span>
+
+            <h1 class="fw-bold mt-3">
+                Analyze Your WhatsApp Chat
+            </h1>
+
+            <p class="upload-hero-description">
+
+                Upload your exported WhatsApp .txt file
+                and VeriChat AI will analyze the conversation
+                for potentially suspicious messages.
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <div class="container upload-container">
+
+        <div class="upload-card">
+
+
+            <button
+                type="button"
+                class="back-button"
+                id="backToGuideButton">
+
+                ← Back to Guide
+
+            </button>
+
+
+            <div class="upload-card-header text-center">
+
+                <div class="upload-icon">
+                    📁
+                </div>
+
+                <h3 class="fw-bold mt-3">
+                    Upload WhatsApp Chat
+                </h3>
+
+                <p class="text-muted-custom mb-0">
+
+                    Select an exported WhatsApp conversation
+                    to begin the analysis.
+
+                </p>
+
+            </div>
+
+
+            {% if error %}
+
+            <div
+                class="alert alert-danger mt-4"
+                role="alert">
+
+                {{ error }}
+
+            </div>
+
+            {% endif %}
+
+
+            <form
+                action="/predict"
+                method="POST"
+                enctype="multipart/form-data"
+                id="uploadForm">
+
+
+                <div class="form-check consent-section">
+
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="consentCheckbox"
+                        name="consentCheckbox">
+
+                    <label
+                        class="form-check-label"
+                        for="consentCheckbox">
+
+                        I understand and agree to the
+
+                        <a
+                            href="#"
+                            class="privacy-link"
+                            data-bs-toggle="modal"
+                            data-bs-target="#privacyModal">
+
+                            Privacy Notice
+
+                        </a>
+
+                        before uploading my WhatsApp chat.
+
+                    </label>
+
+                </div>
+
+
+                <div class="mt-4">
+
+                    <label class="form-label fw-bold">
+                        WhatsApp Chat File
+                    </label>
+
+                    <div class="file-upload-row">
+
+                        <button
+                            type="button"
+                            class="custom-file-button"
+                            id="chooseFileButton"
+                            disabled>
+
+                            Choose File
+
+                        </button>
+
+                        <div
+                            class="file-name-display"
+                            id="fileNameDisplay">
+
+                            No file selected
+
+                        </div>
+
+                        <input
+                            type="file"
+                            id="fileInput"
+                            name="file"
+                            accept=".txt,text/plain"
+                            style="display: none;"
+                            required>
+
+                    </div>
+
+                    <small class="custom-form-text">
+
+                        Only .txt files exported from WhatsApp are supported.
+                        Maximum file size: 5MB.
+
+                    </small>
+
+                </div>
+
+
+                <div class="analyze-button-wrapper">
+
+                    <button
+                        type="submit"
+                        class="btn primary-button analyze-button-small"
+                        id="analyzeButton"
+                        disabled>
+
+                        Analyze Chat
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
 
     </div>
 
-
-    <!-- FEATURE 3 -->
-
-    <div class="feature">
-
-        <div class="feature-icon">
-            🔒
-        </div>
-
-        <h3>
-            Simple & Easy
-        </h3>
-
-        <p>
-            Upload your chat file and get an easy-to-understand
-            analysis result.
-        </p>
-
-    </div>
+</section>
 
 
-</div>
-
-
-<!-- =========================
+<!-- =========================================================
      FOOTER
-========================= -->
+========================================================= -->
 
-<footer>
+<footer class="custom-footer text-center py-4">
 
-    VeriChat AI-Based Scam Chat Detector ©️ 2026
+    <small>
+        VeriChat AI ©️ 2026 |
+        AI-Based Scam Chat Detector
+    </small>
 
 </footer>
+
+
+<!-- =========================================================
+     PRIVACY NOTICE MODAL
+========================================================= -->
+
+<div
+    class="modal fade"
+    id="privacyModal"
+    tabindex="-1"
+    aria-labelledby="privacyModalLabel"
+    aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content custom-modal">
+
+            <div class="modal-header">
+
+                <h5
+                    class="modal-title fw-bold"
+                    id="privacyModalLabel">
+
+                    Privacy Notice
+
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close btn-close-white"
+                    data-bs-dismiss="modal"
+                    aria-label="Close">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <p>
+                    <strong>1. Purpose of Processing</strong><br>
+                    VeriChat AI processes the uploaded WhatsApp
+                    .txt file to analyze message content for
+                    potential scam indicators and generate an
+                    overall scam risk assessment and analysis report.
+                </p>
+
+                <p>
+                    <strong>2. Data Processed</strong><br>
+                    The uploaded chat may contain personal information
+                    such as names, phone numbers, timestamps, and
+                    message content. Users should avoid uploading
+                    unnecessary sensitive information.
+                </p>
+
+                <p>
+                    <strong>3. Use of Uploaded Data</strong><br>
+                    Chat content is processed by the system using
+                    Natural Language Processing (NLP), TF-IDF
+                    feature extraction, and a Naïve Bayes classifier
+                    to classify messages and calculate scam
+                    probability and risk level.
+                </p>
+
+                <p>
+                    <strong>4. Storage and Retention</strong><br>
+                    The uploaded .txt file is processed for analysis
+                    and is not intentionally saved as an uploaded
+                    file by the application. Generated analysis
+                    reports may be stored by the system for
+                    downloading and may contain information from
+                    the analyzed chat.
+                </p>
+
+                <p>
+                    <strong>5. User Responsibility</strong><br>
+                    Only upload conversations that you have the
+                    right or permission to analyze. Users are
+                    responsible for ensuring that the uploaded
+                    information is appropriate for analysis.
+                </p>
+
+                <p>
+                    <strong>6. Security</strong><br>
+                    VeriChat AI applies reasonable input validation
+                    and processing controls to help protect uploaded
+                    information. However, no system can guarantee
+                    complete security of data.
+                </p>
+
+                <p>
+                    <strong>7. AI-Generated Results</strong><br>
+                    The results provided by VeriChat AI are
+                    AI-generated assessments and should not be
+                    treated as definitive proof that a message,
+                    transaction, or person is fraudulent. Users
+                    should independently verify suspicious content.
+                </p>
+
+                <p>
+                    <strong>8. Consent</strong><br>
+                    By selecting the consent checkbox, you confirm
+                    that you have read and understood this Privacy
+                    Notice and agree to the processing of the
+                    uploaded chat for the stated purpose.
+                </p>
+
+                <p class="mb-0">
+                    <strong>Important:</strong>
+                    VeriChat AI is an academic project prototype.
+                    Please avoid uploading highly sensitive or
+                    unnecessary personal information.
+                </p>
+
+                <h6 class="fw-bold mt-4">
+                    9. Personal Data Protection
+                </h6>
+
+                <p class="mb-0">
+                    This Privacy Notice is designed with reference
+                    to the relevant principles of the Personal Data
+                    Protection Act 2010 (Act 709), including notice
+                    and choice, disclosure, security, retention,
+                    data integrity, and access.
+                </p>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="btn primary-button"
+                    data-bs-dismiss="modal">
+
+                    I Understand
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+<script>
+
+const startPage =
+    document.getElementById("startPage");
+
+const uploadPage =
+    document.getElementById("uploadPage");
+
+const getStartedButton =
+    document.getElementById("getStartedButton");
+
+const startAnalysisButton =
+    document.getElementById("startAnalysisButton");
+
+const backToGuideButton =
+    document.getElementById("backToGuideButton");
+
+const iosTab =
+    document.getElementById("iosTab");
+
+const androidTab =
+    document.getElementById("androidTab");
+
+const iosGuide =
+    document.getElementById("iosGuide");
+
+const androidGuide =
+    document.getElementById("androidGuide");
+
+const uploadForm =
+    document.getElementById("uploadForm");
+
+const consentCheckbox =
+    document.getElementById("consentCheckbox");
+
+const chooseFileButton =
+    document.getElementById("chooseFileButton");
+
+const fileInput =
+    document.getElementById("fileInput");
+
+const fileNameDisplay =
+    document.getElementById("fileNameDisplay");
+
+const analyzeButton =
+    document.getElementById("analyzeButton");
+
+
+const mainNavbar =
+    document.getElementById("mainNavbar");
+
+const navbarCollapse =
+    mainNavbar
+        ? new bootstrap.Collapse(mainNavbar, { toggle: false })
+        : null;
+
+const navbarSectionLinks =
+    document.querySelectorAll(
+        "#mainNavbar a[href^='#']"
+    );
+
+navbarSectionLinks.forEach(function (link) {
+
+    link.addEventListener("click", function () {
+
+        if (
+            window.innerWidth < 992 &&
+            mainNavbar.classList.contains("show")
+        ) {
+            navbarCollapse.hide();
+        }
+
+    });
+
+});
+
+
+function showUploadPage() {
+
+    startPage.classList.add("d-none");
+
+    uploadPage.classList.remove("d-none");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+function showStartPage() {
+
+    uploadPage.classList.add("d-none");
+
+    startPage.classList.remove("d-none");
+
+    history.replaceState(
+        null,
+        "",
+        window.location.pathname
+    );
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+getStartedButton.addEventListener(
+    "click",
+    showUploadPage
+);
+
+startAnalysisButton.addEventListener(
+    "click",
+    showUploadPage
+);
+
+backToGuideButton.addEventListener(
+    "click",
+    showStartPage
+);
+
+
+if (window.location.hash === "#upload") {
+
+    showUploadPage();
+
+}
+
+
+{% if error %}
+
+showUploadPage();
+
+{% endif %}
+
+
+iosTab.addEventListener(
+    "click",
+    function () {
+
+        iosTab.classList.add("active");
+
+        androidTab.classList.remove("active");
+
+        iosGuide.classList.remove("d-none");
+
+        androidGuide.classList.add("d-none");
+
+    }
+);
+
+
+androidTab.addEventListener(
+    "click",
+    function () {
+
+        androidTab.classList.add("active");
+
+        iosTab.classList.remove("active");
+
+        androidGuide.classList.remove("d-none");
+
+        iosGuide.classList.add("d-none");
+
+    }
+);
+
+
+consentCheckbox.addEventListener(
+    "change",
+    function () {
+
+        chooseFileButton.disabled =
+            !consentCheckbox.checked;
+
+        if (!consentCheckbox.checked) {
+
+            fileInput.value = "";
+
+            fileNameDisplay.textContent =
+                "No file selected";
+
+            analyzeButton.disabled =
+                true;
+
+        }
+
+    }
+);
+
+
+chooseFileButton.addEventListener(
+    "click",
+    function () {
+
+        if (consentCheckbox.checked) {
+
+            fileInput.click();
+
+        }
+
+    }
+);
+
+
+fileInput.addEventListener(
+    "change",
+    function () {
+
+        if (fileInput.files.length === 0) {
+
+            fileNameDisplay.textContent =
+                "No file selected";
+
+            analyzeButton.disabled =
+                true;
+
+            return;
+
+        }
+
+        const file =
+            fileInput.files[0];
+
+        const fileName =
+            file.name.toLowerCase();
+
+        const maxSize =
+            5 * 1024 * 1024;
+
+
+        if (!fileName.endsWith(".txt")) {
+
+            alert(
+                "Please select a WhatsApp .txt file."
+            );
+
+            fileInput.value = "";
+
+            fileNameDisplay.textContent =
+                "No file selected";
+
+            analyzeButton.disabled =
+                true;
+
+            return;
+
+        }
+
+
+        if (file.size > maxSize) {
+
+            alert(
+                "The selected file is larger than 5MB."
+            );
+
+            fileInput.value = "";
+
+            fileNameDisplay.textContent =
+                "No file selected";
+
+            analyzeButton.disabled =
+                true;
+
+            return;
+
+        }
+
+
+        fileNameDisplay.textContent =
+            file.name;
+
+        analyzeButton.disabled =
+            false;
+
+    }
+);
+
+
+uploadForm.addEventListener(
+    "submit",
+    function (event) {
+
+        if (!consentCheckbox.checked) {
+
+            event.preventDefault();
+
+            alert(
+                "Please agree to the Privacy Notice first."
+            );
+
+            return;
+
+        }
+
+
+        if (fileInput.files.length === 0) {
+
+            event.preventDefault();
+
+            alert(
+                "Please select a WhatsApp .txt file."
+            );
+
+            return;
+
+        }
+
+
+        analyzeButton.disabled =
+            true;
+
+        chooseFileButton.disabled =
+            true;
+
+        analyzeButton.innerHTML =
+            "⏳ Analyzing Chat...";
+
+    }
+);
+
+</script>
 
 
 </body>
