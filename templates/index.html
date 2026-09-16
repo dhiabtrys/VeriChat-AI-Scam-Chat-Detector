@@ -1253,18 +1253,71 @@ const navbarCollapse =
 
 const navbarSectionLinks =
     document.querySelectorAll(
-        "#mainNavbar a[href^='#']"
+        "#mainNavbar a[href^='#'], .navbar-brand[href^='#']"
     );
+
+
+/* =========================================================
+   NAVBAR SECTION NAVIGATION
+   FIXED SO IT ALSO WORKS FROM THE UPLOAD PAGE
+========================================================= */
 
 navbarSectionLinks.forEach(function (link) {
 
-    link.addEventListener("click", function () {
+    link.addEventListener("click", function (event) {
 
+        event.preventDefault();
+
+        const targetId =
+            link.getAttribute("href");
+
+        /*
+         * The Home / How It Works / Tutorial / FAQ sections
+         * are inside startPage.
+         *
+         * Therefore, if the user is currently on the upload
+         * page, show startPage again before scrolling.
+         */
+        uploadPage.classList.add("d-none");
+
+        startPage.classList.remove("d-none");
+
+
+        /*
+         * Close Bootstrap mobile navbar if it is open.
+         */
         if (
             window.innerWidth < 992 &&
             mainNavbar.classList.contains("show")
         ) {
             navbarCollapse.hide();
+        }
+
+
+        /*
+         * Find the requested section.
+         */
+        const targetSection =
+            document.querySelector(targetId);
+
+
+        /*
+         * Scroll to the selected section.
+         *
+         * requestAnimationFrame allows the browser to render
+         * startPage again before calculating the scroll position.
+         */
+        if (targetSection) {
+
+            requestAnimationFrame(function () {
+
+                targetSection.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+            });
+
         }
 
     });
@@ -1525,5 +1578,4 @@ uploadForm.addEventListener(
 
 
 </body>
-
 </html>
