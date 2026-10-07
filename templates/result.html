@@ -31,6 +31,10 @@
 <body>
 
 
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
 <nav class="navbar navbar-expand-lg custom-navbar">
 
     <div class="container">
@@ -119,15 +123,19 @@
 </nav>
 
 
-<!-- RESULT HEADER -->
+<!-- =========================================================
+     RESULT HERO
+========================================================= -->
 
-<section class="result-hero" id="resultTop">
+<section
+    class="result-hero"
+    id="resultTop">
 
     <div class="container">
 
         <div class="result-heading text-center">
 
-            <span class="section-label">
+            <span class="hero-label">
                 AI ANALYSIS COMPLETE
             </span>
 
@@ -137,8 +145,8 @@
 
             <p class="result-intro">
 
-                VeriChat AI analyzed the uploaded conversation
-                and generated an AI-assisted scam risk assessment.
+                Review the overall scam risk, message-level
+                predictions, and supporting information below.
 
             </p>
 
@@ -149,14 +157,22 @@
 </section>
 
 
-<section class="result-page">
+<!-- =========================================================
+     RESULT PAGE
+========================================================= -->
+
+<main class="result-page">
 
     <div class="container">
 
 
-        <!-- ANALYSIS SUMMARY -->
+        <!-- =================================================
+             ANALYSIS SUMMARY
+        ================================================== -->
 
-        <section class="result-section" id="summary">
+        <section
+            class="result-section"
+            id="summary">
 
             <div class="section-heading text-center">
 
@@ -169,14 +185,16 @@
                 </h2>
 
                 <p class="section-description">
-                    Summary of messages classified during the analysis.
+
+                    A quick overview of the messages analyzed
+                    by VeriChat AI.
+
                 </p>
 
             </div>
 
 
             <div class="row g-4">
-
 
                 <div class="col-md-4">
 
@@ -190,7 +208,7 @@
                             Total Messages
                         </p>
 
-                        <h2 class="fw-bold">
+                        <h2 class="fw-bold mb-0">
                             {{ total }}
                         </h2>
 
@@ -204,14 +222,14 @@
                     <div class="result-card scam-summary text-center">
 
                         <div class="summary-icon">
-                            ⚠️
+                            🚨
                         </div>
 
                         <p class="summary-label">
                             Scam Messages
                         </p>
 
-                        <h2 class="fw-bold scam-text">
+                        <h2 class="fw-bold mb-0 scam-text">
                             {{ scam }}
                         </h2>
 
@@ -232,7 +250,7 @@
                             Legitimate Messages
                         </p>
 
-                        <h2 class="fw-bold legit-text">
+                        <h2 class="fw-bold mb-0 legit-text">
                             {{ legit }}
                         </h2>
 
@@ -240,30 +258,33 @@
 
                 </div>
 
-
             </div>
 
         </section>
 
 
-        <!-- SCAM RISK -->
+        <!-- =================================================
+             SCAM RISK
+        ================================================== -->
 
-        <section class="result-section" id="scamRisk">
+        <section
+            class="result-section"
+            id="scamRisk">
 
             <div class="section-heading text-center">
 
                 <span class="section-label">
-                    OVERALL RISK
+                    OVERALL ASSESSMENT
                 </span>
 
                 <h2 class="fw-bold mt-2">
-                    Scam Risk
+                    Scam Risk Assessment
                 </h2>
 
                 <p class="section-description">
 
-                    This section shows the overall scam likelihood
-                    based on the probabilities of all analyzed messages.
+                    The overall score summarizes the scam
+                    probability detected across the analyzed messages.
 
                 </p>
 
@@ -272,19 +293,16 @@
 
             <div class="row g-4 align-items-stretch">
 
-
                 <div class="col-lg-6">
 
                     <div class="risk-card h-100 text-center">
 
                         <h4 class="risk-title">
-                            Risk Score
+                            Overall Scam Risk
                         </h4>
 
                         <div class="risk-score">
-
                             {{ "%.2f"|format(risk) }}%
-
                         </div>
 
 
@@ -293,7 +311,7 @@
                         <span
                             class="risk-badge"
                             style="
-                                background: rgba(34, 197, 94, 0.15);
+                                background: rgba(34,197,94,0.12);
                                 color: #22c55e;
                             ">
 
@@ -306,7 +324,7 @@
                         <span
                             class="risk-badge"
                             style="
-                                background: rgba(245, 158, 11, 0.15);
+                                background: rgba(245,158,11,0.12);
                                 color: #f59e0b;
                             ">
 
@@ -319,7 +337,7 @@
                         <span
                             class="risk-badge"
                             style="
-                                background: rgba(239, 68, 68, 0.15);
+                                background: rgba(239,68,68,0.12);
                                 color: #ef4444;
                             ">
 
@@ -335,8 +353,9 @@
                             The risk score is calculated from the
                             average scam probability across all
                             analyzed messages. A higher percentage
-                            indicates a higher level of suspicious
-                            content in the conversation.
+                            indicates that the conversation contains
+                            more characteristics associated with
+                            scam messages.
 
                         </p>
 
@@ -347,24 +366,18 @@
 
                 <div class="col-lg-6">
 
-                    <div class="risk-meter-card h-100">
+                    <div class="risk-meter-card h-100 text-center">
 
-                        <div class="text-center">
+                        <h4>
+                            Risk Meter
+                        </h4>
 
-                            <h4 class="fw-bold">
-                                Risk Meter
-                            </h4>
+                        <p class="risk-meter-description">
 
-                            <p class="risk-meter-description">
+                            Visual representation of the overall
+                            scam probability detected in this chat.
 
-                                The meter compares the calculated
-                                scam risk percentage with the
-                                remaining score.
-
-                            </p>
-
-                        </div>
-
+                        </p>
 
                         <div class="risk-chart-wrapper">
 
@@ -372,39 +385,25 @@
 
                         </div>
 
-
                         <div class="risk-meter-legend">
 
                             <div class="risk-legend-item">
 
                                 <span class="legend-dot scam-dot"></span>
 
-                                <span>
+                                <span class="scam-text">
                                     Scam Risk
                                 </span>
 
-                                <strong class="scam-text">
-
-                                    {{ "%.2f"|format(risk) }}%
-
-                                </strong>
-
                             </div>
-
 
                             <div class="risk-legend-item">
 
                                 <span class="legend-dot remaining-dot"></span>
 
-                                <span>
+                                <span class="remaining-text">
                                     Remaining
                                 </span>
-
-                                <strong class="remaining-text">
-
-                                    {{ "%.2f"|format(100 - risk) }}%
-
-                                </strong>
 
                             </div>
 
@@ -414,20 +413,23 @@
 
                 </div>
 
-
             </div>
 
         </section>
 
 
-        <!-- MESSAGE ANALYSIS -->
+        <!-- =================================================
+             MESSAGE ANALYSIS
+        ================================================== -->
 
-        <section class="result-section" id="messages">
+        <section
+            class="result-section"
+            id="messages">
 
             <div class="section-heading text-center">
 
                 <span class="section-label">
-                    MESSAGE CLASSIFICATION
+                    MESSAGE-BY-MESSAGE REVIEW
                 </span>
 
                 <h2 class="fw-bold mt-2">
@@ -436,8 +438,8 @@
 
                 <p class="section-description">
 
-                    Review the scam probability generated
-                    for each analyzed message.
+                    Each message is classified based on its
+                    predicted scam probability.
 
                 </p>
 
@@ -446,19 +448,16 @@
 
             <div class="message-analysis-list">
 
-
                 {% for item in results %}
 
-
                     {% if item.probability >= 0.5 %}
-
 
                     <div class="message-analysis-card scam-message-card">
 
                         <div class="message-analysis-header">
 
                             <span class="message-status scam-status">
-                                ⚠️ Potential Scam
+                                🚨 Potential Scam
                             </span>
 
                             <span class="message-probability scam-text">
@@ -468,17 +467,18 @@
 
                         </div>
 
-                        <p class="message-text">
-
+                        <div class="message-text">
                             {{ item.message }}
+                        </div>
 
-                        </p>
+                        <div class="message-probability-label">
+                            Classified as potentially suspicious
+                            by the AI model.
+                        </div>
 
                     </div>
 
-
                     {% else %}
-
 
                     <div class="message-analysis-card legit-message-card">
 
@@ -495,27 +495,29 @@
 
                         </div>
 
-                        <p class="message-text">
-
+                        <div class="message-text">
                             {{ item.message }}
+                        </div>
 
-                        </p>
+                        <div class="message-probability-label">
+                            Classified as likely legitimate
+                            by the AI model.
+                        </div>
 
                     </div>
 
-
                     {% endif %}
 
-
                 {% endfor %}
-
 
             </div>
 
         </section>
 
 
-        <!-- SUPPORTING -->
+        <!-- =================================================
+             SUPPORTING INFORMATION
+        ================================================== -->
 
         <section class="result-section">
 
@@ -531,11 +533,11 @@
 
                 <p class="section-description">
 
-                    Add optional incident information that may be useful
-                    when generating your analysis report. The analysis result
-                    and generated report may also be used as supporting
-                    information when reporting the incident to relevant
-                    authorities, banks, or other responsible agencies.
+                    Add your information and optional incident
+                    details to make the generated analysis report
+                    more useful when reporting the incident to
+                    relevant authorities, banks, or other
+                    responsible agencies.
 
                 </p>
 
@@ -546,18 +548,21 @@
 
                 <div class="supporting-notice">
 
-                    
+                    <div class="supporting-notice-icon">
+                        ℹ️
+                    </div>
+
                     <div>
 
-                        <h5 class="fw-bold">
+                        <h5 class="fw-bold mb-2">
                             Optional Information
                         </h5>
 
                         <p class="mb-0">
 
-                            These fields are optional.
-                            Complete them only if the information
-                            is relevant to your incident.
+                            These fields are optional. Complete them
+                            if you want the information to be included
+                            in the generated PDF report.
 
                         </p>
 
@@ -570,36 +575,161 @@
         </section>
 
 
-        <!-- INCIDENT -->
+        <!-- =================================================
+             REPORTER AND INCIDENT INFORMATION
+        ================================================== -->
 
-        <section class="result-section" id="incident">
+        <section
+            class="result-section"
+            id="incident">
 
             <div class="incident-card">
 
-                <div class="mb-4">
 
-                    <h3 class="fw-bold">
-                        Incident Information
-                    </h3>
+                <!-- REPORTER INFORMATION -->
 
-                    <p class="text-muted-custom">
+                <h3 class="fw-bold mb-2">
+                    Reporter Information
+                </h3>
 
-                        Add details related to the suspected
-                        scam incident if available.
+                <p class="text-muted-custom mb-4">
 
-                    </p>
+                    Add your personal details if you intend to use
+                    this analysis as supporting information when
+                    reporting the incident.
 
-                </div>
+                </p>
 
 
-                <div class="row g-4">
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="reporterName"
+                            class="form-label fw-bold">
+
+                            Full Name
+
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control custom-input"
+                            id="reporterName"
+                            placeholder="Enter your full name">
+
+                    </div>
 
 
                     <div class="col-md-6">
 
                         <label
+                            for="reporterIC"
+                            class="form-label fw-bold">
+
+                            IC / Passport Number
+
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control custom-input"
+                            id="reporterIC"
+                            placeholder="Example: 001122-01-1234">
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="reporterPhone"
+                            class="form-label fw-bold">
+
+                            Phone Number
+
+                        </label>
+
+                        <input
+                            type="tel"
+                            class="form-control custom-input"
+                            id="reporterPhone"
+                            placeholder="Example: +60123456789">
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <label
+                            for="reporterEmail"
+                            class="form-label fw-bold">
+
+                            Email Address (Optional)
+
+                        </label>
+
+                        <input
+                            type="email"
+                            class="form-control custom-input"
+                            id="reporterEmail"
+                            placeholder="Example: name@email.com">
+
+                    </div>
+
+
+                    <div class="col-12">
+
+                        <label
+                            for="reporterAddress"
+                            class="form-label fw-bold">
+
+                            Address
+
+                        </label>
+
+                        <textarea
+                            class="form-control custom-input"
+                            id="reporterAddress"
+                            rows="3"
+                            placeholder="Enter your current address"></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <hr
+                    style="
+                        margin: 35px 0;
+                        border: none;
+                        border-top: 1px solid rgba(148, 163, 184, 0.18);
+                        opacity: 1;
+                    ">
+
+
+                <!-- INCIDENT INFORMATION -->
+
+                <h3 class="fw-bold mb-2">
+                    Incident Information
+                </h3>
+
+                <p class="text-muted-custom mb-4">
+
+                    Add details related to the suspected scam
+                    incident if available.
+
+                </p>
+
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+
+                        <label
                             for="suspectedPhone"
-                            class="form-label fw-semibold">
+                            class="form-label fw-bold">
 
                             Suspected Phone Number
 
@@ -618,7 +748,7 @@
 
                         <label
                             for="suspectedName"
-                            class="form-label fw-semibold">
+                            class="form-label fw-bold">
 
                             Suspected Name
 
@@ -637,7 +767,7 @@
 
                         <label
                             for="suspectedBank"
-                            class="form-label fw-semibold">
+                            class="form-label fw-bold">
 
                             Bank / Financial Institution
 
@@ -656,7 +786,7 @@
 
                         <label
                             for="suspectedAccount"
-                            class="form-label fw-semibold">
+                            class="form-label fw-bold">
 
                             Suspected Account Number
 
@@ -675,7 +805,7 @@
 
                         <label
                             for="amountLost"
-                            class="form-label fw-semibold">
+                            class="form-label fw-bold">
 
                             Amount Lost
 
@@ -694,7 +824,7 @@
 
                         <label
                             for="incidentDate"
-                            class="form-label fw-semibold">
+                            class="form-label fw-bold">
 
                             Incident Date
 
@@ -712,7 +842,7 @@
 
                         <label
                             for="incidentNotes"
-                            class="form-label fw-semibold">
+                            class="form-label fw-bold">
 
                             Additional Notes
 
@@ -726,7 +856,6 @@
 
                     </div>
 
-
                 </div>
 
             </div>
@@ -734,9 +863,13 @@
         </section>
 
 
-        <!-- DOWNLOAD -->
+        <!-- =================================================
+             DOWNLOAD REPORT
+        ================================================== -->
 
-        <section class="result-section" id="report">
+        <section
+            class="result-section"
+            id="report">
 
             <div class="download-report-card text-center">
 
@@ -750,10 +883,10 @@
 
                 <p>
 
-                    Download a supporting PDF report
-                    containing the analysis summary,
-                    high-risk messages and optional
-                    incident information.
+                    Download a PDF containing the analysis summary,
+                    reporter information, incident details,
+                    high-risk messages, recommended actions,
+                    and supporting evidence guidance.
 
                 </p>
 
@@ -771,26 +904,27 @@
         </section>
 
 
-        <!-- DISCLAIMER -->
+        <!-- =================================================
+             DISCLAIMER
+        ================================================== -->
 
         <section class="result-section">
 
             <div class="disclaimer-card">
 
-                <h5 class="fw-bold">
+                <h5 class="fw-bold mb-3">
                     ⚠️ Important Disclaimer
                 </h5>
 
                 <p class="mb-0">
 
                     VeriChat AI provides an AI-assisted assessment
-                    based on patterns identified by the machine
-                    learning model. The result should not be treated
-                    as definitive proof that a message or individual
-                    is fraudulent. Users should verify suspicious
-                    information independently and retain original
-                    evidence such as chats, screenshots and
-                    transaction records.
+                    and should not be treated as definitive proof
+                    that a message, transaction, or person is
+                    fraudulent. Users should independently verify
+                    suspicious content and retain original chats,
+                    screenshots, transaction records, and other
+                    relevant evidence when making an official report.
 
                 </p>
 
@@ -799,7 +933,11 @@
         </section>
 
 
-        <div class="text-center mb-5">
+        <!-- =================================================
+             ANALYZE ANOTHER
+        ================================================== -->
+
+        <section class="result-section text-center">
 
             <a
                 href="/#upload"
@@ -809,29 +947,45 @@
 
             </a>
 
-        </div>
+        </section>
 
 
     </div>
 
-</section>
+</main>
 
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
 
 <footer class="custom-footer text-center py-4">
 
     <small>
-        VeriChat AI © 2026 |
+
+        VeriChat AI ©️ 2026 |
         AI-Based Scam Chat Detector
+
     </small>
 
 </footer>
 
 
+<!-- =========================================================
+     BOOTSTRAP
+========================================================= -->
+
 <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
 </script>
 
+
 <script>
+
+
+/* =========================================================
+   MOBILE NAVBAR
+========================================================= */
 
 const resultNavbar =
     document.getElementById("resultNavbar");
@@ -844,26 +998,35 @@ const resultNavbarCollapse =
         )
         : null;
 
-const resultNavbarLinks =
+const resultNavLinks =
     document.querySelectorAll(
         "#resultNavbar a[href^='#']"
     );
 
-resultNavbarLinks.forEach(function (link) {
+resultNavLinks.forEach(function (link) {
 
-    link.addEventListener("click", function () {
+    link.addEventListener(
+        "click",
+        function () {
 
-        if (
-            window.innerWidth < 992 &&
-            resultNavbar.classList.contains("show")
-        ) {
-            resultNavbarCollapse.hide();
+            if (
+                window.innerWidth < 992 &&
+                resultNavbar.classList.contains("show")
+            ) {
+
+                resultNavbarCollapse.hide();
+
+            }
+
         }
-
-    });
+    );
 
 });
 
+
+/* =========================================================
+   RESULT VALUES
+========================================================= */
 
 const riskScore =
     Number("{{ risk }}");
@@ -880,7 +1043,6 @@ const totalMessages =
 const riskLevel =
     "{{ level }}";
 
-
 const remainingRisk =
     Math.max(
         0,
@@ -888,127 +1050,102 @@ const remainingRisk =
     );
 
 
-new Chart(
-    document.getElementById("riskChart"),
-    {
+/* =========================================================
+   RISK METER
+========================================================= */
 
-        type: "doughnut",
+const riskCanvas =
+    document.getElementById("riskChart");
 
-        data: {
+if (riskCanvas) {
 
-            labels: [
-                "Scam Risk",
-                "Remaining"
-            ],
+    new Chart(
+        riskCanvas,
+        {
 
-            datasets: [
-                {
-                    data: [
-                        riskScore,
-                        remainingRisk
-                    ],
+            type: "doughnut",
 
-                    backgroundColor: [
-                        "#ef4444",
-                        "#2563eb"
-                    ],
+            data: {
 
-                    hoverBackgroundColor: [
-                        "#f87171",
-                        "#3b82f6"
-                    ],
+                labels: [
+                    "Scam Risk",
+                    "Remaining"
+                ],
 
-                    borderWidth: 0
-                }
-            ]
+                datasets: [
 
-        },
+                    {
 
+                        data: [
+                            riskScore,
+                            remainingRisk
+                        ],
 
-        options: {
+                        backgroundColor: [
+                            "#ef4444",
+                            "#2563eb"
+                        ],
 
-            responsive: true,
+                        borderWidth: 0
 
-            maintainAspectRatio: false,
+                    }
 
-            rotation: -90,
+                ]
 
-            circumference: 180,
+            },
 
-            cutout: "72%",
+            options: {
 
+                responsive: true,
 
-            plugins: {
+                maintainAspectRatio: false,
 
-                legend: {
-                    display: false
-                },
+                rotation: -90,
 
+                circumference: 180,
 
-                tooltip: {
+                cutout: "72%",
 
-                    displayColors: true,
+                plugins: {
 
-                    backgroundColor: "#0f1f35",
+                    legend: {
+                        display: false
+                    },
 
-                    titleColor: "#ffffff",
+                    tooltip: {
 
-                    bodyColor: "#cbd5e1",
+                        callbacks: {
 
-                    borderColor: "#334155",
+                            label: function (context) {
 
-                    borderWidth: 1,
+                                if (
+                                    context.label === "Scam Risk"
+                                ) {
 
-                    padding: 12,
+                                    return (
+                                        "Overall Scam Risk: " +
+                                        riskScore.toFixed(2) +
+                                        "%"
+                                    );
 
-
-                    callbacks: {
-
-                        title: function(context) {
-
-                            return context[0].label;
-
-                        },
-
-
-                        label: function(context) {
-
-                            if (context.dataIndex === 0) {
+                                }
 
                                 return (
-                                    riskScore.toFixed(2) +
-                                    "% overall scam risk"
+                                    "Remaining: " +
+                                    remainingRisk.toFixed(2) +
+                                    "%"
                                 );
 
-                            }
+                            },
 
-                            return (
-                                remainingRisk.toFixed(2) +
-                                "% remaining"
-                            );
+                            afterBody: function () {
 
-                        },
-
-
-                        afterLabel: function(context) {
-
-                            if (context.dataIndex === 0) {
-
-                                return (
-                                    scamCount +
-                                    " out of " +
-                                    totalMessages +
-                                    " messages classified as scam"
-                                );
+                                return [
+                                    "Scam Messages: " + scamCount,
+                                    "Legitimate Messages: " + legitCount
+                                ];
 
                             }
-
-                            return (
-                                legitCount +
-                                " out of " +
-                                totalMessages +
-                                " messages classified as legitimate"
-                            );
 
                         }
 
@@ -1019,10 +1156,14 @@ new Chart(
             }
 
         }
+    );
 
-    }
-);
+}
 
+
+/* =========================================================
+   HIGH-RISK MESSAGES FOR PDF
+========================================================= */
 
 const scamMessages = [
 
@@ -1031,8 +1172,9 @@ const scamMessages = [
         {% if item.probability >= 0.5 %}
 
         {
-            text: {{ item.message|tojson }},
-            probability: {{ item.probability }}
+            message: {{ item.message | tojson }},
+            probability:
+                {{ item.probability }}
         },
 
         {% endif %}
@@ -1042,497 +1184,636 @@ const scamMessages = [
 ];
 
 
-document
-    .getElementById("downloadReportButton")
-    .addEventListener(
-        "click",
-        function () {
 
-            const { jsPDF } =
-                window.jspdf;
+/* =========================================================
+   PDF REPORT
+========================================================= */
 
-            const pdf =
-                new jsPDF();
+const downloadReportButton =
+    document.getElementById("downloadReportButton");
 
-            const pageWidth =
-                pdf.internal.pageSize.getWidth();
+downloadReportButton.addEventListener(
+    "click",
+    function () {
 
-            const pageHeight =
-                pdf.internal.pageSize.getHeight();
+        const { jsPDF } = window.jspdf;
 
-            const leftMargin =
-                20;
+        const doc = new jsPDF();
 
-            const rightMargin =
-                20;
+        const pageWidth =
+            doc.internal.pageSize.getWidth();
 
-            const contentWidth =
-                pageWidth -
-                leftMargin -
-                rightMargin;
+        const pageHeight =
+            doc.internal.pageSize.getHeight();
 
-            let y =
-                20;
+        const leftMargin = 18;
+        const rightMargin = 18;
+
+        const contentWidth =
+            pageWidth - leftMargin - rightMargin;
+
+        let y = 20;
 
 
-            function checkPageSpace(requiredSpace) {
+        /* =================================================
+           HELPER - CHECK PAGE SPACE
+        ================================================= */
 
-                if (
-                    y + requiredSpace >
-                    pageHeight - 20
-                ) {
+        function checkPageSpace(requiredSpace = 15) {
 
-                    pdf.addPage();
-
-                    y = 20;
-
-                }
-
-            }
-
-
-            function sectionTitle(number, title) {
-
-                checkPageSpace(18);
-
-                pdf.setFont(
-                    "helvetica",
-                    "bold"
-                );
-
-                pdf.setFontSize(14);
-
-                pdf.setTextColor(
-                    37,
-                    99,
-                    235
-                );
-
-                pdf.text(
-                    number + ". " + title,
-                    leftMargin,
-                    y
-                );
-
-                y += 10;
-
-                pdf.setTextColor(
-                    30,
-                    41,
-                    59
-                );
-
-            }
-
-
-            function addText(
-                text,
-                size = 10,
-                spacing = 6
+            if (
+                y + requiredSpace >
+                pageHeight - 18
             ) {
 
-                pdf.setFont(
-                    "helvetica",
-                    "normal"
-                );
+                doc.addPage();
 
-                pdf.setFontSize(size);
-
-                pdf.setTextColor(
-                    51,
-                    65,
-                    85
-                );
-
-                const lines =
-                    pdf.splitTextToSize(
-                        text,
-                        contentWidth
-                    );
-
-                checkPageSpace(
-                    lines.length *
-                    spacing +
-                    4
-                );
-
-                pdf.text(
-                    lines,
-                    leftMargin,
-                    y
-                );
-
-                y +=
-                    lines.length *
-                    spacing +
-                    4;
+                y = 20;
 
             }
 
+        }
 
-            pdf.setFont(
+
+        /* =================================================
+           HELPER - SECTION TITLE
+        ================================================= */
+
+        function sectionTitle(title) {
+
+            checkPageSpace(20);
+
+            y += 5;
+
+            doc.setFont(
                 "helvetica",
                 "bold"
             );
 
-            pdf.setFontSize(21);
+            doc.setFontSize(13);
 
-            pdf.setTextColor(
-                15,
-                23,
-                42
+            // BLUE SECTION TITLE
+            doc.setTextColor(
+                37,
+                99,
+                235
             );
 
-            pdf.text(
-                "VeriChat AI",
-                leftMargin,
-                y
-            );
-
-            y += 9;
-
-
-            pdf.setFontSize(14);
-
-            pdf.setTextColor(
-                71,
-                85,
-                105
-            );
-
-            pdf.text(
-                "AI-Based Scam Chat Analysis Report",
+            doc.text(
+                title,
                 leftMargin,
                 y
             );
 
             y += 8;
 
+        }
 
-            pdf.setFont(
+
+        /* =================================================
+           HELPER - NORMAL TEXT
+        ================================================= */
+
+        function addText(
+            text,
+            options = {}
+        ) {
+
+            const {
+                bold = false,
+                fontSize = 10,
+                spacing = 6
+            } = options;
+
+            doc.setFont(
                 "helvetica",
-                "normal"
+                bold
+                    ? "bold"
+                    : "normal"
             );
 
-            pdf.setFontSize(9);
-
-            pdf.setTextColor(
-                100,
-                116,
-                139
+            doc.setFontSize(
+                fontSize
             );
 
-            pdf.text(
-                "Generated: " +
-                new Date().toLocaleString(),
+            // DARK GREY TEXT
+            doc.setTextColor(
+                51,
+                65,
+                85
+            );
+
+            const lines =
+                doc.splitTextToSize(
+                    String(text),
+                    contentWidth
+                );
+
+            checkPageSpace(
+                lines.length *
+                spacing +
+                4
+            );
+
+            doc.text(
+                lines,
                 leftMargin,
                 y
             );
 
-            y += 7;
+            y +=
+                lines.length *
+                spacing;
+
+        }
 
 
-            pdf.setDrawColor(
-                37,
-                99,
-                235
-            );
+        /* =================================================
+           GET REPORTER INFORMATION
+        ================================================= */
 
-            pdf.setLineWidth(0.8);
+        const reporterName =
+            document
+                .getElementById("reporterName")
+                .value
+                .trim();
 
-            pdf.line(
-                leftMargin,
-                y,
-                pageWidth - rightMargin,
-                y
-            );
+        const reporterIC =
+            document
+                .getElementById("reporterIC")
+                .value
+                .trim();
 
-            y += 13;
+        const reporterPhone =
+            document
+                .getElementById("reporterPhone")
+                .value
+                .trim();
+
+        const reporterEmail =
+            document
+                .getElementById("reporterEmail")
+                .value
+                .trim();
+
+        const reporterAddress =
+            document
+                .getElementById("reporterAddress")
+                .value
+                .trim();
 
 
-            sectionTitle(
-                1,
-                "Analysis Summary"
-            );
+        /* =================================================
+           GET INCIDENT INFORMATION
+        ================================================= */
 
+        const suspectedPhone =
+            document
+                .getElementById("suspectedPhone")
+                .value
+                .trim();
+
+        const suspectedName =
+            document
+                .getElementById("suspectedName")
+                .value
+                .trim();
+
+        const suspectedBank =
+            document
+                .getElementById("suspectedBank")
+                .value
+                .trim();
+
+        const suspectedAccount =
+            document
+                .getElementById("suspectedAccount")
+                .value
+                .trim();
+
+        const amountLost =
+            document
+                .getElementById("amountLost")
+                .value
+                .trim();
+
+        const incidentDate =
+            document
+                .getElementById("incidentDate")
+                .value
+                .trim();
+
+        const incidentNotes =
+            document
+                .getElementById("incidentNotes")
+                .value
+                .trim();
+
+
+        /* =================================================
+           PDF HEADER
+        ================================================= */
+
+        doc.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        doc.setFontSize(20);
+
+        // DARK NAVY
+        doc.setTextColor(
+            15,
+            23,
+            42
+        );
+
+        doc.text(
+            "VeriChat AI",
+            leftMargin,
+            y
+        );
+
+        y += 9;
+
+
+        doc.setFontSize(14);
+
+        // BLUE GREY
+        doc.setTextColor(
+            71,
+            85,
+            105
+        );
+
+        doc.text(
+            "AI-Based Scam Chat Analysis Report",
+            leftMargin,
+            y
+        );
+
+        y += 8;
+
+
+        doc.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        doc.setFontSize(9);
+
+        // GREY
+        doc.setTextColor(
+            100,
+            116,
+            139
+        );
+
+        doc.text(
+            "Generated: " +
+            new Date().toLocaleString(),
+            leftMargin,
+            y
+        );
+
+        y += 10;
+
+
+        /* =================================================
+           BLUE LINE
+        ================================================= */
+
+        doc.setDrawColor(
+            37,
+            99,
+            235
+        );
+
+        doc.setLineWidth(0.8);
+
+        doc.line(
+            leftMargin,
+            y,
+            pageWidth - rightMargin,
+            y
+        );
+
+        y += 10;
+
+
+        /* =================================================
+           1. ANALYSIS SUMMARY
+        ================================================= */
+
+        sectionTitle(
+            "1. Analysis Summary"
+        );
+
+        addText(
+            "Total Messages Analyzed: " +
+            totalMessages
+        );
+
+        addText(
+            "Messages Classified as Potential Scam: " +
+            scamCount
+        );
+
+        addText(
+            "Messages Classified as Legitimate: " +
+            legitCount
+        );
+
+        addText(
+            "Overall Scam Risk Score: " +
+            riskScore.toFixed(2) +
+            "%"
+        );
+
+        addText(
+            "Risk Level: " +
+            riskLevel
+        );
+
+
+        /* =================================================
+           2. REPORTER INFORMATION
+        ================================================= */
+
+        sectionTitle(
+            "2. Reporter Information"
+        );
+
+        addText(
+            "Full Name: " +
+            (
+                reporterName ||
+                "Not provided"
+            )
+        );
+
+        addText(
+            "IC / Passport Number: " +
+            (
+                reporterIC ||
+                "Not provided"
+            )
+        );
+
+        addText(
+            "Phone Number: " +
+            (
+                reporterPhone ||
+                "Not provided"
+            )
+        );
+
+        addText(
+            "Email Address: " +
+            (
+                reporterEmail ||
+                "Not provided"
+            )
+        );
+
+        addText(
+            "Address: " +
+            (
+                reporterAddress ||
+                "Not provided"
+            )
+        );
+
+
+        /* =================================================
+           3. INCIDENT INFORMATION
+        ================================================= */
+
+        sectionTitle(
+            "3. Incident Information"
+        );
+
+        addText(
+            "Suspected Phone Number: " +
+            (
+                suspectedPhone ||
+                "Not provided"
+            )
+        );
+
+        addText(
+            "Suspected Name: " +
+            (
+                suspectedName ||
+                "Not provided"
+            )
+        );
+
+        addText(
+            "Bank / Financial Institution: " +
+            (
+                suspectedBank ||
+                "Not provided"
+            )
+        );
+
+        addText(
+            "Suspected Account Number: " +
+            (
+                suspectedAccount ||
+                "Not provided"
+            )
+        );
+
+        addText(
+            "Amount Lost: " +
+            (
+                amountLost ||
+                "Not provided"
+            )
+        );
+
+        addText(
+            "Incident Date: " +
+            (
+                incidentDate ||
+                "Not provided"
+            )
+        );
+
+        addText(
+            "Additional Notes: " +
+            (
+                incidentNotes ||
+                "Not provided"
+            )
+        );
+
+
+        /* =================================================
+           4. HIGH-RISK MESSAGE EVIDENCE
+        ================================================= */
+
+        sectionTitle(
+            "4. High-Risk Message Evidence"
+        );
+
+        if (
+            scamMessages.length === 0
+        ) {
 
             addText(
-                "Total Messages Analyzed: " +
-                totalMessages
-            );
-
-            addText(
-                "Messages Classified as Potential Scam: " +
-                scamCount
-            );
-
-            addText(
-                "Messages Classified as Legitimate: " +
-                legitCount
-            );
-
-            addText(
-                "Overall Scam Risk Score: " +
-                riskScore.toFixed(2) +
-                "%"
-            );
-
-            addText(
-                "Risk Level: " +
-                riskLevel
-            );
-
-            y += 4;
-
-
-            sectionTitle(
-                2,
-                "Incident Information"
-            );
-
-
-            const suspectedPhone =
-                document.getElementById("suspectedPhone")
-                    .value.trim();
-
-            const suspectedName =
-                document.getElementById("suspectedName")
-                    .value.trim();
-
-            const suspectedBank =
-                document.getElementById("suspectedBank")
-                    .value.trim();
-
-            const suspectedAccount =
-                document.getElementById("suspectedAccount")
-                    .value.trim();
-
-            const amountLost =
-                document.getElementById("amountLost")
-                    .value.trim();
-
-            const incidentDate =
-                document.getElementById("incidentDate")
-                    .value.trim();
-
-            const incidentNotes =
-                document.getElementById("incidentNotes")
-                    .value.trim();
-
-
-            addText(
-                "Suspected Phone Number: " +
-                (suspectedPhone || "Not provided")
-            );
-
-            addText(
-                "Suspected Name: " +
-                (suspectedName || "Not provided")
-            );
-
-            addText(
-                "Bank / Financial Institution: " +
-                (suspectedBank || "Not provided")
-            );
-
-            addText(
-                "Suspected Account Number: " +
-                (suspectedAccount || "Not provided")
-            );
-
-            addText(
-                "Amount Lost: " +
-                (amountLost || "Not provided")
-            );
-
-            addText(
-                "Incident Date: " +
-                (incidentDate || "Not provided")
-            );
-
-            addText(
-                "Additional Notes: " +
-                (incidentNotes || "Not provided")
-            );
-
-            y += 4;
-
-
-            sectionTitle(
-                3,
-                "High-Risk Message Evidence"
-            );
-
-
-            if (scamMessages.length === 0) {
-
-                addText(
-                    "No messages were classified as potential scam messages."
-                );
-
-            } else {
-
-                scamMessages.forEach(
-                    function(message, index) {
-
-                        checkPageSpace(25);
-
-                        pdf.setFont(
-                            "helvetica",
-                            "bold"
-                        );
-
-                        pdf.setFontSize(10);
-
-                        pdf.setTextColor(
-                            239,
-                            68,
-                            68
-                        );
-
-                        pdf.text(
-                            "Message " +
-                            (index + 1) +
-                            " - Scam Probability: " +
-                            (
-                                message.probability *
-                                100
-                            ).toFixed(2) +
-                            "%",
-                            leftMargin,
-                            y
-                        );
-
-                        y += 7;
-
-
-                        pdf.setTextColor(
-                            51,
-                            65,
-                            85
-                        );
-
-                        const messageLines =
-                            pdf.splitTextToSize(
-                                message.text,
-                                contentWidth
-                            );
-
-                        checkPageSpace(
-                            messageLines.length *
-                            5 +
-                            8
-                        );
-
-                        pdf.setFont(
-                            "helvetica",
-                            "normal"
-                        );
-
-                        pdf.text(
-                            messageLines,
-                            leftMargin,
-                            y
-                        );
-
-                        y +=
-                            messageLines.length *
-                            5 +
-                            8;
-
-                    }
-                );
-
-            }
-
-
-            y += 4;
-
-
-            sectionTitle(
-                4,
-                "Recommended Actions"
-            );
-
-            addText(
-                "• Do not click suspicious links or download unknown attachments."
-            );
-
-            addText(
-                "• Do not share OTP codes, passwords, banking credentials or other sensitive information."
-            );
-
-            addText(
-                "• Verify suspicious requests using official contact channels."
-            );
-
-            addText(
-                "• Contact the relevant bank or service provider immediately if money or account information may be at risk."
-            );
-
-            addText(
-                "• Preserve the original conversation and related evidence before blocking or deleting the contact."
-            );
-
-            y += 4;
-
-
-            sectionTitle(
-                5,
-                "Evidence Checklist"
-            );
-
-            addText(
-                "Keep the following information where available:"
-            );
-
-            addText(
-                "• Original WhatsApp conversation"
-            );
-
-            addText(
-                "• Screenshots of suspicious messages"
-            );
-
-            addText(
-                "• Phone numbers and profile information"
-            );
-
-            addText(
-                "• Bank account or payment information"
-            );
-
-            addText(
-                "• Transaction receipts"
-            );
-
-            addText(
-                "• Suspicious URLs or website details"
-            );
-
-            addText(
-                "• Dates and times related to the incident"
-            );
-
-            y += 4;
-
-
-            sectionTitle(
-                6,
-                "Disclaimer"
-            );
-
-            addText(
-                "VeriChat AI provides an AI-assisted assessment based on patterns identified by the machine learning model. The result is intended as supporting information and should not be treated as definitive proof that a message or individual is fraudulent. Users should independently verify suspicious information and retain original evidence where appropriate."
-            );
-
-
-            pdf.save(
-                "VeriChat_AI_Scam_Analysis_Report.pdf"
+                "No messages were classified as potential scam messages."
             );
 
         }
-    );
+
+        else {
+
+            scamMessages.forEach(
+                function (
+                    item,
+                    index
+                ) {
+
+                    checkPageSpace(28);
+
+
+                    /* =====================================
+                       RED MESSAGE TITLE
+                    ===================================== */
+
+                    doc.setFont(
+                        "helvetica",
+                        "bold"
+                    );
+
+                    doc.setFontSize(10);
+
+                    doc.setTextColor(
+                        239,
+                        68,
+                        68
+                    );
+
+                    doc.text(
+                        "Message " +
+                        (index + 1) +
+                        " - Scam Probability: " +
+                        (
+                            item.probability *
+                            100
+                        ).toFixed(2) +
+                        "%",
+                        leftMargin,
+                        y
+                    );
+
+                    y += 7;
+
+
+                    /* =====================================
+                       MESSAGE CONTENT
+                    ===================================== */
+
+                    addText(
+                        item.message
+                    );
+
+                    y += 3;
+
+                }
+            );
+
+        }
+
+
+        /* =================================================
+           5. RECOMMENDED ACTIONS
+        ================================================= */
+
+        sectionTitle(
+            "5. Recommended Actions"
+        );
+
+        addText(
+            "1. Do not send money or provide sensitive personal information to suspicious contacts."
+        );
+
+        addText(
+            "2. Verify suspicious requests using official contact channels."
+        );
+
+        addText(
+            "3. Contact your bank immediately if a financial transaction has already occurred."
+        );
+
+        addText(
+            "4. Report suspected scam activity to the relevant authorities when necessary."
+        );
+
+        addText(
+            "5. Preserve the original conversation and other supporting records."
+        );
+
+
+        /* =================================================
+           6. EVIDENCE CHECKLIST
+        ================================================= */
+
+        sectionTitle(
+            "6. Evidence Checklist"
+        );
+
+        addText(
+            "- Original WhatsApp chat"
+        );
+
+        addText(
+            "- Screenshots of suspicious messages"
+        );
+
+        addText(
+            "- Phone numbers or contact information"
+        );
+
+        addText(
+            "- Bank account details"
+        );
+
+        addText(
+            "- Transaction receipts or payment records"
+        );
+
+        addText(
+            "- Other relevant supporting documents"
+        );
+
+
+        /* =================================================
+           7. DISCLAIMER
+        ================================================= */
+
+        sectionTitle(
+            "7. Disclaimer"
+        );
+
+        addText(
+            "This report is generated by VeriChat AI as an AI-assisted assessment. It should not be treated as definitive proof that a message, transaction, or person is fraudulent. The analysis should be independently verified and used together with original evidence when reporting a suspected scam incident."
+        );
+
+
+        /* =================================================
+           SAVE PDF
+        ================================================= */
+
+        doc.save(
+            "VeriChat_AI_Scam_Analysis_Report.pdf"
+        );
+
+    }
+);
+
 
 </script>
 
